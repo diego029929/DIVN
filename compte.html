@@ -142,6 +142,8 @@
     const switchForm = document.getElementById('switchForm');
     const formTitle = document.getElementById('formTitle');
     const submitBtn = document.getElementById('submitBtn');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
 
     let isLogin = false; // false = inscription, true = connexion
 
@@ -150,30 +152,27 @@
       if(isLogin){
         formTitle.textContent = "Se connecter";
         submitBtn.textContent = "Se connecter";
-        accountForm.email.style.display = "none";
-        accountForm.username.style.display = "none";
+        usernameInput.style.display = "none";
         switchForm.textContent = "Vous n'avez pas de compte ? Créer un compte";
       } else {
         formTitle.textContent = "Créer un compte";
         submitBtn.textContent = "S'inscrire";
-        accountForm.email.style.display = "block";
-        accountForm.username.style.display = "block";
+        usernameInput.style.display = "block";
         switchForm.textContent = "Vous avez déjà un compte ? Se connecter";
       }
     });
 
     accountForm.addEventListener('submit', (e) => {
       e.preventDefault();
-      const username = document.getElementById('username').value;
-      const email = document.getElementById('email').value;
-      const password = document.getElementById('password').value;
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = document.getElementById('password').value.trim();
 
       let users = JSON.parse(localStorage.getItem('users')) || [];
 
       if(!isLogin){
         // INSCRIPTION
-        const exists = users.find(u => u.email === email);
-        if(exists){
+        if(users.find(u => u.email === email)){
           alert("Un compte avec cet email existe déjà !");
           return;
         }
@@ -181,7 +180,7 @@
         localStorage.setItem('users', JSON.stringify(users));
         alert("Compte créé avec succès !");
       } else {
-        // CONNEXION
+        // CONNEXION uniquement avec email + password
         const user = users.find(u => u.email === email && u.password === password);
         if(user){
           localStorage.setItem('currentUser', JSON.stringify(user));
@@ -195,5 +194,5 @@
     });
   </script>
 </body>
-  </html>
-          
+        </html>
+                                                                     

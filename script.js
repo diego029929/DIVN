@@ -22,14 +22,30 @@ const overlay = document.getElementById('overlay');
 menuBtn.addEventListener('click', () => {
   sideMenu.classList.add('active');
   overlay.classList.add('show');
+  document.body.style.overflow = "hidden"; // empêche le scroll de la page
 });
 
 closeBtn.addEventListener('click', () => {
   sideMenu.classList.remove('active');
   overlay.classList.remove('show');
+  document.body.style.overflow = ""; // réactive le scroll
 });
 
 overlay.addEventListener('click', () => {
   sideMenu.classList.remove('active');
   overlay.classList.remove('show');
+  document.body.style.overflow = ""; // réactive le scroll
 });
+
+// BARRE DE RECHERCHE
+const searchInput = document.querySelector('.search-bar input');
+const searchBar = document.querySelector('.search-bar');
+
+searchInput.addEventListener('focus', () => {
+  searchBar.classList.add('active');
+});
+
+searchInput.addEventListener('blur', () => {
+  searchBar.classList.remove('active');
+});
+  

@@ -43,11 +43,12 @@ const searchBar = document.querySelector('.search-bar');
 const searchBtn = document.getElementById('searchBtn');
 const productsContainer = document.querySelector('.products');
 
-[searchInput, searchBtn].forEach(el => {
-  el.addEventListener('click', () => searchBar.classList.add('active'));
-});
-
-searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
+if (searchInput && searchBtn) {
+  [searchInput, searchBtn].forEach(el => {
+    el.addEventListener('click', () => searchBar.classList.add('active'));
+  });
+  searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
+}
 
 // Fonction de tri par pertinence
 function relevanceScore(productTitle, query) {
@@ -58,8 +59,8 @@ function relevanceScore(productTitle, query) {
   let score = 0;
   queryWords.forEach(q => {
     titleWords.forEach(t => {
-      if (t.includes(q)) score += 2;
-      if (t === q) score += 3;
+      if (t.includes(q)) score += 2;   // mot trouvé
+      if (t === q) score += 3;         // mot exact
     });
   });
   return score;
@@ -67,6 +68,8 @@ function relevanceScore(productTitle, query) {
 
 // Fonction de rendu produits
 function renderProducts() {
+  if (!productsContainer) return;
+
   const query = searchInput.value.trim();
   const sortValue = document.getElementById('sort').value;
 
@@ -107,6 +110,10 @@ function renderProducts() {
     if (!noResults) {
       noResults = document.createElement('div');
       noResults.classList.add('no-results');
+      noResults.style.textAlign = 'center';
+      noResults.style.color = '#fff';
+      noResults.style.fontSize = '1.2rem';
+      noResults.style.marginTop = '20px';
       noResults.textContent = "Aucun produit trouvé";
       productsContainer.appendChild(noResults);
     }
@@ -116,8 +123,9 @@ function renderProducts() {
 }
 
 // Événements recherche & tri
-searchInput.addEventListener('input', renderProducts);
-document.getElementById('sort').addEventListener('change', renderProducts);
+if (searchInput) searchInput.addEventListener('input', renderProducts);
+const sortSelect = document.getElementById('sort');
+if (sortSelect) sortSelect.addEventListener('change', renderProducts);
 
 // PRODUITS ANIMATION AU SCROLL
 const productCards = document.querySelectorAll('.product-card');
@@ -163,19 +171,14 @@ productCards.forEach(card => {
   });
 });
 
-// CLIQUE SUR MENU
+// CLIQUE SUR MENU (corrigé pour permettre navigation directe)
 document.querySelectorAll('.side-menu ul li a').forEach(link => {
-  link.addEventListener('click', e => {
-    e.preventDefault();
-    const text = link.textContent.trim();
-    let page = 'index.html';
-    if(text.includes('Tous nos produits')) page = 'produits.html';
-    else if(text.includes("L'histoire")) page = 'histoire.html';
-    else if(text.includes("Besoin d'aide")) page = 'aide.html';
-    else if(text.includes('The FAM')) page = 'fam.html';
-    else if(text.includes('L’équipage')) page = 'equipage.html';
-    else if(text.includes('Créer un compte')) page = 'compte.html';
-    window.location.href = page;
+  link.addEventListener('click', () => {
+    // Fermer menu et overlay
+    sideMenu.classList.remove('active');
+    overlay.classList.remove('show');
+    document.body.style.overflow = "";
+    // Le lien <a> agit normalement grâce au href
   });
 });
 
@@ -188,4 +191,3 @@ document.querySelector('header').appendChild(cartIcon);
 cartIcon.addEventListener('click', () => {
   window.location.href = 'panier.html';
 });
-                  

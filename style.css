@@ -109,6 +109,19 @@ header {
   border-radius: 12px;
   padding: 15px;
   text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.6s ease;
+}
+
+.product-card.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.product-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 20px rgba(255,255,255,0.1);
 }
 
 .product-title {
@@ -130,6 +143,7 @@ header {
   width: 100%;
   display: none;
   border-radius: 10px;
+  transition: opacity 0.5s ease;
 }
 
 .product-slider img.active {
@@ -210,6 +224,7 @@ header {
   margin-bottom: 20px;
 }
 
+/* MENU LI + ANIMATION */
 .side-menu ul {
   list-style: none;
   padding: 0;
@@ -219,6 +234,14 @@ header {
 .side-menu ul li {
   margin: 20px 0;
   text-align: left;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: all 0.4s ease;
+}
+
+.side-menu.active ul li {
+  opacity: 1;
+  transform: translateX(0);
 }
 
 .side-menu ul li a {
@@ -249,7 +272,15 @@ header {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: 40px; /* remontés un peu */
+  margin-top: 20px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.4s ease;
+}
+
+.side-menu.active .social-links {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .social-links a {
@@ -261,4 +292,4 @@ header {
 .social-links a:hover {
   transform: scale(1.2);
   }
-                                
+  

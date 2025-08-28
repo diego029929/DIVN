@@ -17,35 +17,19 @@ document.querySelectorAll('.product-slider').forEach(slider => {
 const menuBtn = document.querySelector('.menu-burger');
 const sideMenu = document.getElementById('sideMenu');
 const closeBtn = document.getElementById('closeMenu');
-const overlay = document.querySelector('.overlay');
+const overlay = document.getElementById('overlay');
 
 menuBtn.addEventListener('click', () => {
   sideMenu.classList.add('active');
-  overlay.classList.add('active');
+  overlay.classList.add('show');
 });
 
 closeBtn.addEventListener('click', () => {
   sideMenu.classList.remove('active');
-  overlay.classList.remove('active');
+  overlay.classList.remove('show');
 });
 
 overlay.addEventListener('click', () => {
   sideMenu.classList.remove('active');
-  overlay.classList.remove('active');
-  searchOverlay.classList.remove('active');
-});
-
-// SEARCH BAR OVERLAY
-const searchBtn = document.getElementById('searchBtn');
-const searchOverlay = document.getElementById('searchOverlay');
-const closeSearch = document.getElementById('closeSearch');
-
-searchBtn.addEventListener('click', () => {
-  searchOverlay.classList.add('active');
-  overlay.classList.add('active');
-});
-
-closeSearch.addEventListener('click', () => {
-  searchOverlay.classList.remove('active');
-  overlay.classList.remove('active');
+  overlay.classList.remove('show');
 });

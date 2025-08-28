@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panier</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+  <!-- HEADER / BARRE DE RECHERCHE -->
+  <header>
+    <div class="menu-burger"><i class="fas fa-arrow-left"></i></div>
+    <div class="search-bar">
+      <input type="text" placeholder="Retour à l'accueil">
+      <button id="homeBtn"><i class="fas fa-home"></i></button>
+    </div>
+  </header>
+
+  <h2 style="padding: 20px;">Mon Panier</h2>
+
+  <!-- PRODUITS PANIER -->
+  <div class="products" id="cartProducts">
+    <div class="product-card">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
+      </div>
+      <div class="product-title">Produit 1</div>
+      <div class="product-price">49,99 €</div>
+      <button class="remove-btn">Supprimer</button>
+    </div>
+
+    <div class="product-card">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
+      </div>
+      <div class="product-title">Produit 2</div>
+      <div class="product-price">59,99 €</div>
+      <button class="remove-btn">Supprimer</button>
+    </div>
+  </div>
+
+  <script>
+    // RETOUR ACCUEIL
+    document.getElementById('homeBtn').addEventListener('click', () => {
+      window.location.href = 'index.html';
+    });
+
+    // SUPPRESSION PRODUITS
+    const removeBtns = document.querySelectorAll('.remove-btn');
+    removeBtns.forEach(btn => {
+      btn.addEventListener('click', e => {
+        e.target.parentElement.remove();
+      });
+    });
+  </script>
+</body>
+                                            </html>
+                                            

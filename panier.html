@@ -22,20 +22,9 @@
 
   <div class="products" id="cartProducts"></div>
 
-  <!-- PAYPAL -->
+  <!-- BOUTON PAYPAL -->
   <div style="padding: 20px; text-align: center;">
     <div id="paypal-button-container"></div>
-  </div>
-
-  <!-- ESPACE POUR TES COMPTES / INFOS -->
-  <div style="padding: 20px; background: #1a1a1a; border-radius: 10px; margin: 20px;">
-    <h3>Mes comptes / informations de contact</h3>
-    <p>Tu peux mettre ici ton IBAN, RIB, ou autres infos de contact pour les clients.</p>
-    <!-- Exemple -->
-    <ul>
-      <li>IBAN : FR76 XXXX XXXX XXXX XXXX XXXX</li>
-      <li>Email support : contact@tonsite.com</li>
-    </ul>
   </div>
 
 <script>
@@ -44,7 +33,7 @@
     window.location.href = 'index.html';
   });
 
-  // Charger panier depuis localStorage
+  // Charger le panier depuis localStorage
   function loadCart() {
     const cartProducts = document.getElementById('cartProducts');
     cartProducts.innerHTML = '';
@@ -72,18 +61,13 @@
     renderPaypal(cart);
   }
 
-  // Rendu du bouton PayPal avec toutes les méthodes de paiement
+  // Rendu du bouton PayPal avec paiement par carte inclus
   function renderPaypal(cart) {
     document.getElementById('paypal-button-container').innerHTML = '';
     if(cart.length === 0) return;
 
     paypal.Buttons({
-      fundingSource: paypal.FUNDING.PAYPAL, // par défaut
-      style: {
-        layout: 'vertical',
-        shape: 'rect',
-        label: 'pay'
-      },
+      style: { layout: 'vertical', shape: 'rect', label: 'pay' },
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
@@ -105,16 +89,11 @@
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
           console.log("Paiement effectué :", details);
-
-          // Ici tu peux envoyer automatiquement la commande au fournisseur
-          // fetch('https://ton-api-fournisseur.com/commande', {...})
-
-          alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
           localStorage.removeItem('cart');
           loadCart();
         });
       },
-      // Permet à l’utilisateur de payer par carte bancaire directement via PayPal
+      // Autorise paiement par carte sans compte PayPal
       funding: {
         allowed: [paypal.FUNDING.CARD, paypal.FUNDING.PAYPAL, paypal.FUNDING.CREDIT]
       }
@@ -124,5 +103,4 @@
   loadCart();
 </script>
 </body>
-  </html>
-  
+</html>

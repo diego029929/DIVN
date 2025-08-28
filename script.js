@@ -22,30 +22,49 @@ const overlay = document.getElementById('overlay');
 menuBtn.addEventListener('click', () => {
   sideMenu.classList.add('active');
   overlay.classList.add('show');
-  document.body.style.overflow = "hidden"; // empêche le scroll de la page
+  document.body.style.overflow = "hidden";
 });
 
 closeBtn.addEventListener('click', () => {
   sideMenu.classList.remove('active');
   overlay.classList.remove('show');
-  document.body.style.overflow = ""; // réactive le scroll
+  document.body.style.overflow = "";
 });
 
 overlay.addEventListener('click', () => {
   sideMenu.classList.remove('active');
   overlay.classList.remove('show');
-  document.body.style.overflow = ""; // réactive le scroll
+  document.body.style.overflow = "";
 });
 
 // BARRE DE RECHERCHE
 const searchInput = document.querySelector('.search-bar input');
 const searchBar = document.querySelector('.search-bar');
+const searchBtn = document.getElementById('searchBtn');
 
-searchInput.addEventListener('focus', () => {
-  searchBar.classList.add('active');
+[searchInput, searchBtn].forEach(el => {
+  el.addEventListener('click', () => {
+    searchBar.classList.add('active');
+  });
 });
 
 searchInput.addEventListener('blur', () => {
   searchBar.classList.remove('active');
 });
-  
+
+// PRODUITS ANIMATION AU SCROLL
+const productCards = document.querySelectorAll('.product-card');
+
+function showProductsOnScroll() {
+  const triggerBottom = window.innerHeight * 0.85;
+  productCards.forEach(card => {
+    const cardTop = card.getBoundingClientRect().top;
+    if(cardTop < triggerBottom){
+      card.classList.add('show');
+    }
+  });
+}
+
+window.addEventListener('scroll', showProductsOnScroll);
+showProductsOnScroll();
+    

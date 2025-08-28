@@ -1,4 +1,4 @@
-// SLIDER JS
+// SLIDER
 document.querySelectorAll('.product-slider').forEach(slider => {
   const slides = slider.querySelectorAll('img');
   const dots = slider.querySelectorAll('.slider-dots span');
@@ -11,4 +11,24 @@ document.querySelectorAll('.product-slider').forEach(slider => {
       dots[idx].classList.add('active');
     });
   });
+});
+
+// MENU BURGER
+const menuBtn = document.querySelector('.menu-burger');
+const sideMenu = document.getElementById('sideMenu');
+const closeBtn = document.getElementById('closeMenu');
+
+menuBtn.addEventListener('click', () => {
+  sideMenu.classList.add('open');
+});
+
+closeBtn.addEventListener('click', () => {
+  sideMenu.classList.remove('open');
+});
+
+// Fermer le menu si clic à l'extérieur
+document.addEventListener('click', (e) => {
+  if (sideMenu.classList.contains('open') && !sideMenu.contains(e.target) && !menuBtn.contains(e.target)) {
+    sideMenu.classList.remove('open');
+  }
 });

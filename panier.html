@@ -5,11 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panier</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script> <!-- Sandbox -->
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- HEADER / BARRE DE RECHERCHE -->
   <header>
     <div class="menu-burger" id="backHome"><i class="fas fa-arrow-left"></i></div>
     <div class="search-bar">
@@ -19,91 +19,80 @@
 
   <h2 style="padding: 20px;">Mon Panier</h2>
 
-  <!-- PRODUITS PANIER -->
-  <div class="products" id="cartProducts">
-    <!-- Produits ajoutés dynamiquement -->
-  </div>
+  <div class="products" id="cartProducts"></div>
 
-  <!-- BOUTON PAYPAL -->
   <div style="padding: 20px; text-align: center;">
     <div id="paypal-button-container"></div>
   </div>
 
-  <script>
-    // RETOUR ACCUEIL via flèche
-    document.getElementById('backHome').addEventListener('click', () => {
-      window.location.href = 'index.html';
-    });
+<script>
+  // Retour accueil
+  document.getElementById('backHome').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
 
-    // Fonction pour ajouter un produit au panier
-    function addToCart(title, price, imageUrl) {
-      const cartProducts = document.getElementById('cartProducts');
+  // Charger panier depuis localStorage
+  function loadCart() {
+    const cartProducts = document.getElementById('cartProducts');
+    cartProducts.innerHTML = '';
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
 
+    cart.forEach((item, index) => {
       const card = document.createElement('div');
-      card.classList.add('product-card', 'show');
-
+      card.classList.add('product-card','show');
       card.innerHTML = `
         <div class="product-slider">
-          <img src="${imageUrl}" class="active">
+          <img src="${item.image}" class="active">
         </div>
-        <div class="product-title">${title}</div>
-        <div class="product-price">${price}</div>
+        <div class="product-title">${item.title}</div>
+        <div class="product-price">${item.price}</div>
         <button class="remove-btn">Supprimer</button>
       `;
-
-      // Supprimer le produit
       card.querySelector('.remove-btn').addEventListener('click', () => {
-        card.remove();
+        cart.splice(index,1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
       });
-
       cartProducts.appendChild(card);
-      updatePaypal();
-    }
+    });
 
-    // Exemple de produit (pour test)
-    // addToCart("Produit Test", "49.99", "https://via.placeholder.com/300x300?text=Test");
+    updatePaypal(cart);
+  }
 
-    // PAYPAL BUTTON
-    function updatePaypal() {
-      const cartProducts = document.querySelectorAll('.product-card');
-      const items = Array.from(cartProducts).map(card => {
-        return {
-          name: card.querySelector('.product-title').textContent,
-          unit_amount: { currency_code: "EUR", value: card.querySelector('.product-price').textContent.replace("€","").trim() },
-          quantity: "1"
-        };
-      });
+  function updatePaypal(cart) {
+    document.getElementById('paypal-button-container').innerHTML = '';
+    if(cart.length === 0) return;
 
-      // Supprimer le bouton précédent
-      document.getElementById('paypal-button-container').innerHTML = '';
-
-      if(items.length === 0) return;
-
-      paypal.Buttons({
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              items: items,
-              amount: {
-                currency_code: "EUR",
-                value: items.reduce((sum, item) => sum + parseFloat(item.unit_amount.value),0).toFixed(2),
-                breakdown: {
-                  item_total: { currency_code: "EUR", value: items.reduce((sum, item) => sum + parseFloat(item.unit_amount.value),0).toFixed(2) }
-                }
+    paypal.Buttons({
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            items: cart.map(item => ({
+              name: item.title,
+              unit_amount: { currency_code: "EUR", value: item.price },
+              quantity: "1"
+            })),
+            amount: {
+              currency_code: "EUR",
+              value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2),
+              breakdown: {
+                item_total: { currency_code: "EUR", value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2) }
               }
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
-            document.getElementById('cartProducts').innerHTML = '';
-            updatePaypal();
-          });
-        }
-      }).render('#paypal-button-container');
-    }
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
+          localStorage.removeItem('cart');
+          loadCart();
+        });
+      }
+    }).render('#paypal-button-container');
+  }
 
-  </script>
+  loadCart();
+</script>
 </body>
 </html>

@@ -72,6 +72,26 @@ productCards.forEach(card => {
   });
 });
 
+// AJOUT DU BOUTON "PLUS AU PANIER" avec localStorage
+productCards.forEach(card => {
+  const priceDiv = card.querySelector('.product-price');
+  const btn = document.createElement('button');
+  btn.classList.add('add-to-cart-btn');
+  btn.innerHTML = '<i class="fas fa-shopping-cart"></i> +';
+  priceDiv.insertAdjacentElement('afterend', btn);
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation(); // empêche la redirection
+    const title = card.dataset.title;
+    const price = card.dataset.price;
+    const image = card.dataset.image;
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ title, price, image });
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+});
+
 // CLIQUE SUR MENU
 document.querySelectorAll('.side-menu ul li a').forEach(link => {
   link.addEventListener('click', e => {
@@ -79,8 +99,8 @@ document.querySelectorAll('.side-menu ul li a').forEach(link => {
     const text = link.textContent.trim();
     let page = 'index.html';
     if(text.includes('Tous nos produits')) page = 'produits.html';
-    else if(text.includes('L\'histoire')) page = 'histoire.html';
-    else if(text.includes('Besoin d\'aide')) page = 'aide.html';
+    else if(text.includes("L'histoire")) page = 'histoire.html';
+    else if(text.includes("Besoin d'aide")) page = 'aide.html';
     else if(text.includes('The FAM')) page = 'fam.html';
     else if(text.includes('L’équipage')) page = 'equipage.html';
     else if(text.includes('Créer un compte')) page = 'compte.html';
@@ -94,22 +114,7 @@ cartIcon.classList.add('cart-icon');
 cartIcon.innerHTML = '<i class="fas fa-shopping-cart"></i>';
 document.querySelector('header').appendChild(cartIcon);
 
-cartIcon.addEventListener('click', () => window.location.href = 'panier.html');
-
-// AJOUT DU BOUTON "PLUS AU PANIER"
-productCards.forEach(card => {
-  const priceDiv = card.querySelector('.product-price');
-  const btn = document.createElement('button');
-  btn.classList.add('add-to-cart-btn');
-  btn.innerHTML = '<i class="fas fa-shopping-cart"></i> +';
-  priceDiv.insertAdjacentElement('afterend', btn);
-
-  btn.addEventListener('click', e => {
-    e.stopPropagation();
-    const productName = card.querySelector('.product-title').textContent;
-    const productPrice = card.querySelector('.product-price').textContent;
-    console.log(`Ajout au panier: ${productName} (${productPrice})`);
-    alert(`${productName} a été ajouté au panier !`);
-  });
+cartIcon.addEventListener('click', () => {
+  window.location.href = 'panier.html';
 });
-  
+                                

@@ -43,14 +43,10 @@ const searchBar = document.querySelector('.search-bar');
 const searchBtn = document.getElementById('searchBtn');
 
 [searchInput, searchBtn].forEach(el => {
-  el.addEventListener('click', () => {
-    searchBar.classList.add('active');
-  });
+  el.addEventListener('click', () => searchBar.classList.add('active'));
 });
 
-searchInput.addEventListener('blur', () => {
-  searchBar.classList.remove('active');
-});
+searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
 
 // PRODUITS ANIMATION AU SCROLL
 const productCards = document.querySelectorAll('.product-card');
@@ -59,13 +55,10 @@ function showProductsOnScroll() {
   const triggerBottom = window.innerHeight * 0.85;
   productCards.forEach(card => {
     const cardTop = card.getBoundingClientRect().top;
-    if(cardTop < triggerBottom){
-      card.classList.add('show');
-    }
+    if(cardTop < triggerBottom) card.classList.add('show');
   });
 }
 
-// Force affichage au chargement
 window.addEventListener('load', () => {
   productCards.forEach(card => card.classList.add('show'));
 });
@@ -73,7 +66,7 @@ window.addEventListener('load', () => {
 window.addEventListener('scroll', showProductsOnScroll);
 
 // CLIQUE SUR PRODUITS -> page produit.html
-productCards.forEach((card, idx) => {
+productCards.forEach(card => {
   card.addEventListener('click', () => {
     window.location.href = 'produit.html';
   });
@@ -101,7 +94,22 @@ cartIcon.classList.add('cart-icon');
 cartIcon.innerHTML = '<i class="fas fa-shopping-cart"></i>';
 document.querySelector('header').appendChild(cartIcon);
 
-cartIcon.addEventListener('click', () => {
-  window.location.href = 'panier.html';
+cartIcon.addEventListener('click', () => window.location.href = 'panier.html');
+
+// AJOUT DU BOUTON "PLUS AU PANIER"
+productCards.forEach(card => {
+  const priceDiv = card.querySelector('.product-price');
+  const btn = document.createElement('button');
+  btn.classList.add('add-to-cart-btn');
+  btn.innerHTML = '<i class="fas fa-shopping-cart"></i> +';
+  priceDiv.insertAdjacentElement('afterend', btn);
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation();
+    const productName = card.querySelector('.product-title').textContent;
+    const productPrice = card.querySelector('.product-price').textContent;
+    console.log(`Ajout au panier: ${productName} (${productPrice})`);
+    alert(`${productName} a été ajouté au panier !`);
+  });
 });
-        
+  

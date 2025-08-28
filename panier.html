@@ -5,7 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panier</title>
   <link rel="stylesheet" href="style.css">
-  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script>
+  <!-- Remplace TON_LIVE_CLIENT_ID par ton vrai Live Client ID PayPal -->
+  <script src="https://www.paypal.com/sdk/js?client-id=TON_LIVE_CLIENT_ID&currency=EUR&intent=capture"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
@@ -21,8 +22,20 @@
 
   <div class="products" id="cartProducts"></div>
 
+  <!-- PAYPAL -->
   <div style="padding: 20px; text-align: center;">
     <div id="paypal-button-container"></div>
+  </div>
+
+  <!-- ESPACE POUR TES COMPTES / INFOS -->
+  <div style="padding: 20px; background: #1a1a1a; border-radius: 10px; margin: 20px;">
+    <h3>Mes comptes / informations de contact</h3>
+    <p>Tu peux mettre ici ton IBAN, RIB, ou autres infos de contact pour les clients.</p>
+    <!-- Exemple -->
+    <ul>
+      <li>IBAN : FR76 XXXX XXXX XXXX XXXX XXXX</li>
+      <li>Email support : contact@tonsite.com</li>
+    </ul>
   </div>
 
 <script>
@@ -56,14 +69,21 @@
       cartProducts.appendChild(card);
     });
 
-    updatePaypal(cart);
+    renderPaypal(cart);
   }
 
-  function updatePaypal(cart) {
+  // Rendu du bouton PayPal avec toutes les méthodes de paiement
+  function renderPaypal(cart) {
     document.getElementById('paypal-button-container').innerHTML = '';
     if(cart.length === 0) return;
 
     paypal.Buttons({
+      fundingSource: paypal.FUNDING.PAYPAL, // par défaut
+      style: {
+        layout: 'vertical',
+        shape: 'rect',
+        label: 'pay'
+      },
       createOrder: function(data, actions) {
         return actions.order.create({
           purchase_units: [{
@@ -84,10 +104,19 @@
       },
       onApprove: function(data, actions) {
         return actions.order.capture().then(function(details) {
+          console.log("Paiement effectué :", details);
+
+          // Ici tu peux envoyer automatiquement la commande au fournisseur
+          // fetch('https://ton-api-fournisseur.com/commande', {...})
+
           alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
           localStorage.removeItem('cart');
           loadCart();
         });
+      },
+      // Permet à l’utilisateur de payer par carte bancaire directement via PayPal
+      funding: {
+        allowed: [paypal.FUNDING.CARD, paypal.FUNDING.PAYPAL, paypal.FUNDING.CREDIT]
       }
     }).render('#paypal-button-container');
   }
@@ -95,4 +124,5 @@
   loadCart();
 </script>
 </body>
-</html>
+  </html>
+  

@@ -41,12 +41,55 @@ overlay.addEventListener('click', () => {
 const searchInput = document.querySelector('.search-bar input');
 const searchBar = document.querySelector('.search-bar');
 const searchBtn = document.getElementById('searchBtn');
+const productContainer = document.querySelector('.products');
 
 [searchInput, searchBtn].forEach(el => {
-  el.addEventListener('click', () => searchBar.classList.add('active'));
+  el.addEventListener('focus', () => searchBar.classList.add('active'));
+  el.addEventListener('blur', () => searchBar.classList.remove('active'));
 });
 
-searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
+// FILTRAGE + TRI
+function normalize(str) {
+  return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+}
+
+function similarity(str, keyword) {
+  const words = normalize(str).split(" ");
+  const keys = normalize(keyword).split(" ");
+  return keys.reduce((score, key) => score + (words.includes(key) ? 1 : 0), 0);
+}
+
+function filterProducts() {
+  const query = searchInput.value.trim();
+  const sort = document.getElementById('sort').value;
+  let cards = Array.from(document.querySelectorAll('.product-card'));
+
+  // Calcul pertinence
+  cards.forEach(card => {
+    card.dataset.score = similarity(card.dataset.title, query);
+  });
+
+  // Filtrer si recherche
+  if(query !== "") {
+    cards = cards.filter(card => card.dataset.score > 0);
+  }
+
+  // Tri
+  if(sort === "pertinence") {
+    cards.sort((a, b) => b.dataset.score - a.dataset.score);
+  } else if(sort === "asc") {
+    cards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
+  } else if(sort === "desc") {
+    cards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+  }
+
+  // Afficher
+  productContainer.innerHTML = "";
+  cards.forEach(c => productContainer.appendChild(c));
+}
+
+searchInput.addEventListener("input", filterProducts);
+document.getElementById("sort").addEventListener("change", filterProducts);
 
 // PRODUITS ANIMATION AU SCROLL
 const productCards = document.querySelectorAll('.product-card');
@@ -78,7 +121,7 @@ productCards.forEach(card => {
   priceDiv.insertAdjacentElement('afterend', btn);
 
   btn.addEventListener('click', e => {
-    e.stopPropagation(); // empêche redirection
+    e.stopPropagation();
     const title = card.dataset.title;
     const price = card.dataset.price;
     const image = card.dataset.image;
@@ -114,4 +157,3 @@ document.querySelector('header').appendChild(cartIcon);
 cartIcon.addEventListener('click', () => {
   window.location.href = 'panier.html';
 });
-    

@@ -65,6 +65,43 @@ function showProductsOnScroll() {
   });
 }
 
+// Force affichage au chargement
+window.addEventListener('load', () => {
+  productCards.forEach(card => card.classList.add('show'));
+});
+
 window.addEventListener('scroll', showProductsOnScroll);
-showProductsOnScroll();
-    
+
+// CLIQUE SUR PRODUITS -> page produit.html
+productCards.forEach((card, idx) => {
+  card.addEventListener('click', () => {
+    window.location.href = 'produit.html';
+  });
+});
+
+// CLIQUE SUR MENU
+document.querySelectorAll('.side-menu ul li a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const text = link.textContent.trim();
+    let page = 'index.html';
+    if(text.includes('Tous nos produits')) page = 'produits.html';
+    else if(text.includes('L\'histoire')) page = 'histoire.html';
+    else if(text.includes('Besoin d\'aide')) page = 'aide.html';
+    else if(text.includes('The FAM')) page = 'fam.html';
+    else if(text.includes('L’équipage')) page = 'equipage.html';
+    else if(text.includes('Créer un compte')) page = 'compte.html';
+    window.location.href = page;
+  });
+});
+
+// CLIQUE SUR PANIER -> panier.html
+const cartIcon = document.createElement('div');
+cartIcon.classList.add('cart-icon');
+cartIcon.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+document.querySelector('header').appendChild(cartIcon);
+
+cartIcon.addEventListener('click', () => {
+  window.location.href = 'panier.html';
+});
+        

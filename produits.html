@@ -1,164 +1,168 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Produits</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Produits</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header>
-    <div class="menu-burger"><i class="fas fa-bars"></i></div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Rechercher un produit...">
-      <button id="searchBtn"><i class="fas fa-search"></i></button>
-    </div>
-  </header>
-  
-  <!-- TRI -->
-  <div class="filter">
-    <select id="sort">
-      <option value="pertinence">Pertinence</option>
-      <option value="asc">Prix croissant</option>
-      <option value="desc">Prix décroissant</option>
-    </select>
-  </div>
+  <!-- HEADER -->
+  <header>
+    <div class="menu-burger"><i class="fas fa-bars"></i></div>
+    <div class="search-bar">
+      <input type="text" id="searchInput" placeholder="Rechercher un produit...">
+      <button id="searchBtn"><i class="fas fa-search"></i></button>
+    </div>
+  </header>
+  
+  <!-- TRI -->
+  <div class="filter">
+    <select id="sort">
+      <option value="pertinence">Pertinence</option>
+      <option value="asc">Prix croissant</option>
+      <option value="desc">Prix décroissant</option>
+    </select>
+  </div>
 
-  <!-- PRODUITS (mêmes que index.html) -->
-  <div class="products">
-    <div class="product-card" data-title="Produit 1 Chaussure Sport" data-price="49.99" data-image="https://via.placeholder.com/300x300?text=Produit+1A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 1 Chaussure Sport</div>
-      <div class="product-price">49,99 €</div>
-    </div>
+  <!-- PRODUITS -->
+  <div class="products">
+    <div class="product-card" data-title="Produit 1 Chaussure Sport" data-price="49.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+1B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+1C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+1D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 1 Chaussure Sport</div>
+      <div class="product-price">49,99 €</div>
+    </div>
 
-    <div class="product-card" data-title="Produit 2 Veste Hiver" data-price="59.99" data-image="https://via.placeholder.com/300x300?text=Produit+2A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 2 Veste Hiver</div>
-      <div class="product-price">59,99 €</div>
-    </div>
+    <div class="product-card" data-title="Produit 2 Veste Hiver" data-price="59.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+2B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+2C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+2D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 2 Veste Hiver</div>
+      <div class="product-price">59,99 €</div>
+    </div>
 
-    <div class="product-card" data-title="Produit 3 Casque Audio" data-price="79.99" data-image="https://via.placeholder.com/300x300?text=Produit+3A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 3 Casque Audio</div>
-      <div class="product-price">79,99 €</div>
-    </div>
+    <div class="product-card" data-title="Produit 3 Casque Audio" data-price="79.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+3A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+3B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+3C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+3D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 3 Casque Audio</div>
+      <div class="product-price">79,99 €</div>
+    </div>
 
-    <div class="product-card" data-title="Produit 4 Sac à Dos" data-price="39.99" data-image="https://via.placeholder.com/300x300?text=Produit+4A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 4 Sac à Dos</div>
-      <div class="product-price">39,99 €</div>
-    </div>
+    <div class="product-card" data-title="Produit 4 Sac à Dos" data-price="39.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+4A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+4B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+4C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+4D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 4 Sac à Dos</div>
+      <div class="product-price">39,99 €</div>
+    </div>
 
-    <div class="product-card" data-title="Produit 5 Montre Connectée" data-price="99.99" data-image="https://via.placeholder.com/300x300?text=Produit+5A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 5 Montre Connectée</div>
-      <div class="product-price">99,99 €</div>
-    </div>
+    <div class="product-card" data-title="Produit 5 Montre Connectée" data-price="99.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+5A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+5B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+5C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+5D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 5 Montre Connectée</div>
+      <div class="product-price">99,99 €</div>
+    </div>
 
-    <div class="product-card" data-title="Produit 6 Lunettes Soleil" data-price="29.99" data-image="https://via.placeholder.com/300x300?text=Produit+6A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Produit 6 Lunettes Soleil</div>
-      <div class="product-price">29,99 €</div>
-    </div>
-  </div>
+    <div class="product-card" data-title="Produit 6 Lunettes Soleil" data-price="29.99">
+      <div class="product-slider">
+        <img src="https://via.placeholder.com/300x300?text=Produit+6A" class="active">
+        <img src="https://via.placeholder.com/300x300?text=Produit+6B">
+        <img src="https://via.placeholder.com/300x300?text=Produit+6C">
+        <img src="https://via.placeholder.com/300x300?text=Produit+6D">
+        <div class="slider-dots"><span class="active"></span><span></span><span></span><span></span></div>
+      </div>
+      <div class="product-title">Produit 6 Lunettes Soleil</div>
+      <div class="product-price">29,99 €</div>
+    </div>
+  </div>
 
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
 
-  <!-- MENU LATERAL -->
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-content">
-      <div class="side-menu-header">
-        <span id="closeMenu">&times;</span>
-      </div>
-      <ul>
-        <li><a href="#"><i class="fas fa-box"></i> Tous nos produits</a></li>
-        <li><a href="#"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
-        <li><a href="#"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
-        <li><a href="#"><i class="fas fa-users"></i> The FAM</a></li>
-        <li><a href="#"><i class="fas fa-ship"></i> L’équipage</a></li>
-        <li><a href="#"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
-      </ul>
+  <!-- MENU LATERAL -->
+  <div class="side-menu" id="sideMenu">
+    <div class="menu-content">
+      <div class="side-menu-header"><span id="closeMenu">&times;</span></div>
+      <ul>
+        <li><a href="#"><i class="fas fa-box"></i> Tous nos produits</a></li>
+        <li><a href="#"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
+        <li><a href="#"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
+        <li><a href="#"><i class="fas fa-users"></i> The FAM</a></li>
+        <li><a href="#"><i class="fas fa-ship"></i> L’équipage</a></li>
+        <li><a href="#"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
+      </ul>
+      <div class="social-links">
+        <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+        <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+      </div>
+    </div>
+  </div>
 
-      <div class="social-links">
-        <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </div>
+  <script>
+    const menuBtn = document.querySelector('.menu-burger');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeBtn = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
 
-  <script src="script.js"></script>
+    menuBtn.addEventListener('click', () => {
+      sideMenu.classList.add('active');
+      overlay.classList.add('show');
+      document.body.style.overflow = "hidden";
+    });
+    closeBtn.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      overlay.classList.remove('show');
+      document.body.style.overflow = "";
+    });
+    overlay.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      overlay.classList.remove('show');
+      document.body.style.overflow = "";
+    });
+
+    document.querySelectorAll('.side-menu ul li a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const text = link.textContent.trim();
+        let page = 'index.html';
+        if(text.includes('Tous nos produits')) page = 'index.html';
+        else if(text.includes("L'histoire")) page = 'histoire.html';
+        else if(text.includes("Besoin d'aide")) page = 'aide.html';
+        else if(text.includes('The FAM')) page = 'fam.html';
+        else if(text.includes('L’équipage')) page = 'equipage.html';
+        else if(text.includes('Créer un compte')) page = 'compte.html';
+        window.location.href = page;
+      });
+    });
+  </script>
+  <script src="script.js"></script>
 </body>
   </html>
-  
+          

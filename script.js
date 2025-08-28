@@ -45,7 +45,6 @@ const searchBtn = document.getElementById('searchBtn');
 [searchInput, searchBtn].forEach(el => {
   el.addEventListener('click', () => searchBar.classList.add('active'));
 });
-
 searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
 
 // PRODUITS ANIMATION AU SCROLL
@@ -59,20 +58,17 @@ function showProductsOnScroll() {
   });
 }
 
-window.addEventListener('load', () => {
-  productCards.forEach(card => card.classList.add('show'));
-});
-
+window.addEventListener('load', () => productCards.forEach(card => card.classList.add('show')));
 window.addEventListener('scroll', showProductsOnScroll);
 
-// CLIQUE SUR PRODUITS -> page produit.html
+// CLIQUE SUR PRODUITS -> produit.html
 productCards.forEach(card => {
   card.addEventListener('click', () => {
     window.location.href = 'produit.html';
   });
 });
 
-// AJOUT DU BOUTON "PLUS AU PANIER" avec localStorage
+// AJOUT DU BOUTON "AJOUTER AU PANIER"
 productCards.forEach(card => {
   const priceDiv = card.querySelector('.product-price');
   const btn = document.createElement('button');
@@ -81,7 +77,7 @@ productCards.forEach(card => {
   priceDiv.insertAdjacentElement('afterend', btn);
 
   btn.addEventListener('click', e => {
-    e.stopPropagation(); // empêche la redirection
+    e.stopPropagation(); // empêche redirection
     const title = card.dataset.title;
     const price = card.dataset.price;
     const image = card.dataset.image;
@@ -108,7 +104,7 @@ document.querySelectorAll('.side-menu ul li a').forEach(link => {
   });
 });
 
-// CLIQUE SUR PANIER -> panier.html
+// PANIER
 const cartIcon = document.createElement('div');
 cartIcon.classList.add('cart-icon');
 cartIcon.innerHTML = '<i class="fas fa-shopping-cart"></i>';
@@ -117,4 +113,4 @@ document.querySelector('header').appendChild(cartIcon);
 cartIcon.addEventListener('click', () => {
   window.location.href = 'panier.html';
 });
-                                
+      

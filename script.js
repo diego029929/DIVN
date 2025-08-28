@@ -1,89 +1,16 @@
-// DONNÉES PRODUITS
-const products = [
-  {title:"Produit 1", price:49.99, images:["https://via.placeholder.com/300x300?text=1A","https://via.placeholder.com/300x300?text=1B","https://via.placeholder.com/300x300?text=1C","https://via.placeholder.com/300x300?text=1D"]},
-  {title:"Produit 2", price:59.99, images:["https://via.placeholder.com/300x300?text=2A","https://via.placeholder.com/300x300?text=2B","https://via.placeholder.com/300x300?text=2C","https://via.placeholder.com/300x300?text=2D"]},
-  {title:"Produit 3", price:39.99, images:["https://via.placeholder.com/300x300?text=3A","https://via.placeholder.com/300x300?text=3B","https://via.placeholder.com/300x300?text=3C","https://via.placeholder.com/300x300?text=3D"]},
-  {title:"Produit 4", price:29.99, images:["https://via.placeholder.com/300x300?text=4A","https://via.placeholder.com/300x300?text=4B","https://via.placeholder.com/300x300?text=4C","https://via.placeholder.com/300x300?text=4D"]},
-  {title:"Produit 5", price:19.99, images:["https://via.placeholder.com/300x300?text=5A","https://via.placeholder.com/300x300?text=5B","https://via.placeholder.com/300x300?text=5C","https://via.placeholder.com/300x300?text=5D"]},
-  {title:"Produit 6", price:9.99, images:["https://via.placeholder.com/300x300?text=6A","https://via.placeholder.com/300x300?text=6B","https://via.placeholder.com/300x300?text=6C","https://via.placeholder.com/300x300?text=6D"]}
-];
+// SLIDER (4 images par produit)
+document.querySelectorAll('.product-slider').forEach(slider => {
+  const slides = slider.querySelectorAll('img');
+  const dots = slider.querySelectorAll('.slider-dots span');
 
-const container = document.getElementById("productsContainer");
-
-// AFFICHER LES PRODUITS
-function renderProducts(list){
-  container.innerHTML = "";
-  list.forEach(p=>{
-    const card = document.createElement("div");
-    card.classList.add("product-card");
-    card.dataset.title = p.title;
-    card.dataset.price = p.price;
-    card.dataset.image = p.images[0];
-
-    card.innerHTML = `
-      <div class="product-slider">
-        ${p.images.map((img,i)=>`<img src="${img}" class="${i===0?'active':''}">`).join('')}
-        <div class="slider-dots">
-          ${p.images.map((_,i)=>`<span class="${i===0?'active':''}"></span>`).join('')}
-        </div>
-      </div>
-      <div class="product-title">${p.title}</div>
-      <div class="product-price">${p.price} €</div>
-    `;
-
-    container.appendChild(card);
-
-    // Slider
-    const slides = card.querySelectorAll("img");
-    const dots = card.querySelectorAll(".slider-dots span");
-    dots.forEach((dot,idx)=>{
-      dot.addEventListener("click",()=>{
-        slides.forEach(s=>s.classList.remove("active"));
-        dots.forEach(d=>d.classList.remove("active"));
-        slides[idx].classList.add("active");
-        dots[idx].classList.add("active");
-      });
+  dots.forEach((dot, idx) => {
+    dot.addEventListener('click', () => {
+      slides.forEach(s => s.classList.remove('active'));
+      dots.forEach(d => d.classList.remove('active'));
+      slides[idx].classList.add('active');
+      dots[idx].classList.add('active');
     });
-
-    // Ajouter au panier
-    const btn = document.createElement("button");
-    btn.classList.add("add-to-cart-btn");
-    btn.innerHTML = '<i class="fas fa-shopping-cart"></i> +';
-    card.querySelector(".product-price").insertAdjacentElement("afterend", btn);
-    btn.addEventListener("click", e=>{
-      e.stopPropagation();
-      let cart = JSON.parse(localStorage.getItem("cart"))||[];
-      cart.push({title:p.title, price:p.price, image:p.images[0]});
-      localStorage.setItem("cart", JSON.stringify(cart));
-    });
-
-    card.addEventListener("click", ()=> window.location.href="produit.html");
   });
-}
-
-renderProducts(products);
-
-// TRIER PAR SELECT
-const sortSelect = document.getElementById("sort");
-sortSelect.addEventListener("change",()=>{
-  let sorted = [...products];
-  if(sortSelect.value==="asc") sorted.sort((a,b)=>a.price-b.price);
-  else if(sortSelect.value==="desc") sorted.sort((a,b)=>b.price-a.price);
-  renderProducts(sorted);
-});
-
-// RECHERCHE
-const searchInput = document.getElementById("searchInput");
-searchInput.addEventListener("input", ()=>{
-  const term = searchInput.value.toLowerCase();
-  const filtered = products.map(p=>{
-    let score = 0;
-    p.title.toLowerCase().split(" ").forEach(word=>{
-      if(term.includes(word)) score++;
-    });
-    return {...p, score};
-  }).filter(p=>p.score>0).sort((a,b)=>b.score-a.score);
-  renderProducts(filtered);
 });
 
 // MENU BURGER
@@ -92,15 +19,99 @@ const sideMenu = document.getElementById('sideMenu');
 const closeBtn = document.getElementById('closeMenu');
 const overlay = document.getElementById('overlay');
 
-menuBtn.addEventListener('click',()=>{
+menuBtn.addEventListener('click', () => {
   sideMenu.classList.add('active');
   overlay.classList.add('show');
-  document.body.style.overflow="hidden";
+  document.body.style.overflow = "hidden";
 });
-closeBtn.addEventListener('click',closeMenu);
-overlay.addEventListener('click',closeMenu);
-function closeMenu(){
+
+closeBtn.addEventListener('click', () => {
   sideMenu.classList.remove('active');
   overlay.classList.remove('show');
-  document.body.style.overflow="";
+  document.body.style.overflow = "";
+});
+
+overlay.addEventListener('click', () => {
+  sideMenu.classList.remove('active');
+  overlay.classList.remove('show');
+  document.body.style.overflow = "";
+});
+
+// BARRE DE RECHERCHE
+const searchInput = document.querySelector('.search-bar input');
+const searchBar = document.querySelector('.search-bar');
+const searchBtn = document.getElementById('searchBtn');
+
+[searchInput, searchBtn].forEach(el => {
+  el.addEventListener('click', () => searchBar.classList.add('active'));
+});
+
+searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
+
+// PRODUITS ANIMATION AU SCROLL
+const productCards = document.querySelectorAll('.product-card');
+
+function showProductsOnScroll() {
+  const triggerBottom = window.innerHeight * 0.85;
+  productCards.forEach(card => {
+    const cardTop = card.getBoundingClientRect().top;
+    if(cardTop < triggerBottom) card.classList.add('show');
+  });
 }
+
+window.addEventListener('load', () => productCards.forEach(card => card.classList.add('show')));
+window.addEventListener('scroll', showProductsOnScroll);
+
+// CLIQUE SUR PRODUITS -> produit.html
+productCards.forEach(card => {
+  card.addEventListener('click', () => {
+    window.location.href = 'produit.html';
+  });
+});
+
+// AJOUT DU BOUTON "AJOUTER AU PANIER"
+productCards.forEach(card => {
+  const priceDiv = card.querySelector('.product-price');
+  const btn = document.createElement('button');
+  btn.classList.add('add-to-cart-btn');
+  btn.innerHTML = '<i class="fas fa-shopping-cart"></i> +';
+  priceDiv.insertAdjacentElement('afterend', btn);
+
+  btn.addEventListener('click', e => {
+    e.stopPropagation(); // empêche redirection
+    const title = card.dataset.title;
+    const price = card.dataset.price;
+    const image = card.dataset.image;
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+    cart.push({ title, price, image });
+    localStorage.setItem('cart', JSON.stringify(cart));
+  });
+});
+
+// CLIQUE SUR MENU
+document.querySelectorAll('.side-menu ul li a').forEach(link => {
+  link.addEventListener('click', e => {
+    e.preventDefault();
+    const text = link.textContent.trim();
+    let page = 'index.html';
+    if(text.includes('Tous nos produits')) page = 'produits.html';
+    else if(text.includes("L'histoire")) page = 'histoire.html';
+    else if(text.includes("Besoin d'aide")) page = 'aide.html';
+    else if(text.includes('The FAM')) page = 'fam.html';
+    else if(text.includes('L’équipage')) page = 'equipage.html';
+    else if(text.includes('Créer un compte')) page = 'compte.html';
+    window.location.href = page;
+  });
+});
+
+// PANIER
+const cartIcon = document.createElement('div');
+cartIcon.classList.add('cart-icon');
+cartIcon.innerHTML = '<i class="fas fa-shopping-cart"></i>';
+document.querySelector('header').appendChild(cartIcon);
+
+cartIcon.addEventListener('click', () => {
+  window.location.href = 'panier.html';
+});
+    

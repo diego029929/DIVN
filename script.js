@@ -58,8 +58,8 @@ function relevanceScore(productTitle, query) {
   let score = 0;
   queryWords.forEach(q => {
     titleWords.forEach(t => {
-      if (t.includes(q)) score += 2;   // mot trouvé
-      if (t === q) score += 3;         // mot exact
+      if (t.includes(q)) score += 2;
+      if (t === q) score += 3;
     });
   });
   return score;
@@ -72,7 +72,6 @@ function renderProducts() {
 
   let products = Array.from(document.querySelectorAll('.product-card'));
 
-  // Filtrage + pertinence
   products = products.map(p => {
     return {
       element: p,
@@ -91,9 +90,29 @@ function renderProducts() {
     products.sort((a, b) => b.score - a.score); // pertinence
   }
 
-  // Réinjection
+  // Réinjection dans le DOM
   productsContainer.innerHTML = "";
-  products.forEach(p => productsContainer.appendChild(p.element));
+  let anyVisible = false;
+  products.forEach(p => {
+    if (p.score > 0 || query === "") {
+      p.element.classList.add('show');
+      productsContainer.appendChild(p.element);
+      anyVisible = true;
+    }
+  });
+
+  // Message "Aucun produit trouvé"
+  let noResults = document.querySelector('.no-results');
+  if (!anyVisible) {
+    if (!noResults) {
+      noResults = document.createElement('div');
+      noResults.classList.add('no-results');
+      noResults.textContent = "Aucun produit trouvé";
+      productsContainer.appendChild(noResults);
+    }
+  } else if (noResults) {
+    noResults.remove();
+  }
 }
 
 // Événements recherche & tri
@@ -169,4 +188,4 @@ document.querySelector('header').appendChild(cartIcon);
 cartIcon.addEventListener('click', () => {
   window.location.href = 'panier.html';
 });
-        
+                  

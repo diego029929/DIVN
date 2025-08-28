@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Panier</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <script src="https://www.paypal.com/sdk/js?client-id=sb&currency=EUR"></script> <!-- Sandbox -->
 </head>
 <body>
 
@@ -21,7 +21,12 @@
 
   <!-- PRODUITS PANIER -->
   <div class="products" id="cartProducts">
-    <!-- Les produits seront ajoutés dynamiquement -->
+    <!-- Produits ajoutés dynamiquement -->
+  </div>
+
+  <!-- BOUTON PAYPAL -->
+  <div style="padding: 20px; text-align: center;">
+    <div id="paypal-button-container"></div>
   </div>
 
   <script>
@@ -52,10 +57,53 @@
       });
 
       cartProducts.appendChild(card);
+      updatePaypal();
     }
 
-    // Exemple pour tester (sera retiré plus tard)
-    // addToCart("Produit Test", "49,99 €", "https://via.placeholder.com/300x300?text=Test");
+    // Exemple de produit (pour test)
+    // addToCart("Produit Test", "49.99", "https://via.placeholder.com/300x300?text=Test");
+
+    // PAYPAL BUTTON
+    function updatePaypal() {
+      const cartProducts = document.querySelectorAll('.product-card');
+      const items = Array.from(cartProducts).map(card => {
+        return {
+          name: card.querySelector('.product-title').textContent,
+          unit_amount: { currency_code: "EUR", value: card.querySelector('.product-price').textContent.replace("€","").trim() },
+          quantity: "1"
+        };
+      });
+
+      // Supprimer le bouton précédent
+      document.getElementById('paypal-button-container').innerHTML = '';
+
+      if(items.length === 0) return;
+
+      paypal.Buttons({
+        createOrder: function(data, actions) {
+          return actions.order.create({
+            purchase_units: [{
+              items: items,
+              amount: {
+                currency_code: "EUR",
+                value: items.reduce((sum, item) => sum + parseFloat(item.unit_amount.value),0).toFixed(2),
+                breakdown: {
+                  item_total: { currency_code: "EUR", value: items.reduce((sum, item) => sum + parseFloat(item.unit_amount.value),0).toFixed(2) }
+                }
+              }
+            }]
+          });
+        },
+        onApprove: function(data, actions) {
+          return actions.order.capture().then(function(details) {
+            alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
+            document.getElementById('cartProducts').innerHTML = '';
+            updatePaypal();
+          });
+        }
+      }).render('#paypal-button-container');
+    }
+
   </script>
 </body>
 </html>

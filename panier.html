@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Mon Panier</title>
   <link rel="stylesheet" href="style.css">
+  <!-- SDK PayPal avec ton client ID -->
   <script src="https://www.paypal.com/sdk/js?client-id=YOUR_CLIENT_ID&currency=EUR"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
@@ -21,88 +22,85 @@
   <h2 style="padding: 20px;">Mon Panier</h2>
 
   <!-- PRODUITS PANIER -->
-  <div class="products" id="cartProducts">
-    <!-- Produits ajoutés dynamiquement -->
-  </div>
+  <div class="products" id="cartProducts"></div>
 
-  <!-- BOUTON PAYPAL -->
+  <!-- BOUTON PAIEMENT -->
   <div style="padding: 20px; text-align: center;">
     <div id="paypal-button-container"></div>
   </div>
 
-  <script>
-    // Retour accueil via flèche
-    document.getElementById('backHome').addEventListener('click', () => {
-      window.location.href = 'index.html';
+<script>
+  // Retour accueil
+  document.getElementById('backHome').addEventListener('click', () => {
+    window.location.href = 'index.html';
+  });
+
+  // Charger le panier depuis localStorage
+  function loadCart() {
+    const cartProducts = document.getElementById('cartProducts');
+    cartProducts.innerHTML = '';
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    cart.forEach((item, index) => {
+      const card = document.createElement('div');
+      card.classList.add('product-card', 'show');
+      card.innerHTML = `
+        <div class="product-slider">
+          <img src="${item.image}" class="active">
+        </div>
+        <div class="product-title">${item.title}</div>
+        <div class="product-price">${item.price}</div>
+        <button class="remove-btn">Supprimer</button>
+      `;
+      card.querySelector('.remove-btn').addEventListener('click', () => {
+        cart.splice(index,1);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        loadCart();
+      });
+      cartProducts.appendChild(card);
     });
 
-    // Charger le panier depuis localStorage
-    function loadCart() {
-      const cartProducts = document.getElementById('cartProducts');
-      cartProducts.innerHTML = '';
-      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+    updatePaypal(cart);
+  }
 
-      cart.forEach((item, index) => {
-        const card = document.createElement('div');
-        card.classList.add('product-card', 'show');
-        card.innerHTML = `
-          <div class="product-slider">
-            <img src="${item.image}" class="active">
-          </div>
-          <div class="product-title">${item.title}</div>
-          <div class="product-price">${item.price}</div>
-          <button class="remove-btn">Supprimer</button>
-        `;
+  // PayPal + Carte bancaire
+  function updatePaypal(cart) {
+    const container = document.getElementById('paypal-button-container');
+    container.innerHTML = '';
+    if(cart.length === 0) return;
 
-        // Supprimer le produit
-        card.querySelector('.remove-btn').addEventListener('click', () => {
-          cart.splice(index,1);
-          localStorage.setItem('cart', JSON.stringify(cart));
+    paypal.Buttons({
+      style: { layout: 'vertical', color: 'blue', shape: 'rect', label: 'paypal' },
+      fundingSource: paypal.FUNDING.CARD, // uniquement carte bancaire
+      createOrder: function(data, actions) {
+        return actions.order.create({
+          purchase_units: [{
+            items: cart.map(item => ({
+              name: item.title,
+              unit_amount: { currency_code: "EUR", value: item.price },
+              quantity: "1"
+            })),
+            amount: {
+              currency_code: "EUR",
+              value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2),
+              breakdown: {
+                item_total: { currency_code: "EUR", value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2) }
+              }
+            }
+          }]
+        });
+      },
+      onApprove: function(data, actions) {
+        return actions.order.capture().then(function(details) {
+          // Vider le panier après paiement
+          localStorage.removeItem('cart');
           loadCart();
         });
+      }
+    }).render('#paypal-button-container');
+  }
 
-        cartProducts.appendChild(card);
-      });
-
-      updatePaypal(cart);
-    }
-
-    // Intégration PayPal
-    function updatePaypal(cart) {
-      const container = document.getElementById('paypal-button-container');
-      container.innerHTML = '';
-      if(cart.length === 0) return;
-
-      paypal.Buttons({
-        createOrder: function(data, actions) {
-          return actions.order.create({
-            purchase_units: [{
-              items: cart.map(item => ({
-                name: item.title,
-                unit_amount: { currency_code: "EUR", value: item.price },
-                quantity: "1"
-              })),
-              amount: {
-                currency_code: "EUR",
-                value: cart.reduce((sum,item) => sum + parseFloat(item.price),0).toFixed(2),
-                breakdown: {
-                  item_total: { currency_code: "EUR", value: cart.reduce((sum,item) => sum + parseFloat(item.price),0).toFixed(2) }
-                }
-              }
-            }]
-          });
-        },
-        onApprove: function(data, actions) {
-          return actions.order.capture().then(function(details) {
-            // Panier vidé après paiement
-            localStorage.removeItem('cart');
-            loadCart();
-          });
-        }
-      }).render('#paypal-button-container');
-    }
-
-    loadCart();
-  </script>
+  loadCart();
+</script>
 </body>
 </html>

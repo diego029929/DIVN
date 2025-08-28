@@ -11,10 +11,9 @@
 
   <!-- HEADER / BARRE DE RECHERCHE -->
   <header>
-    <div class="menu-burger"><i class="fas fa-arrow-left"></i></div>
+    <div class="menu-burger" id="backHome"><i class="fas fa-arrow-left"></i></div>
     <div class="search-bar">
       <input type="text" placeholder="Retour à l'accueil">
-      <button id="homeBtn"><i class="fas fa-home"></i></button>
     </div>
   </header>
 
@@ -42,8 +41,8 @@
   </div>
 
   <script>
-    // RETOUR ACCUEIL
-    document.getElementById('homeBtn').addEventListener('click', () => {
+    // RETOUR ACCUEIL via flèche
+    document.getElementById('backHome').addEventListener('click', () => {
       window.location.href = 'index.html';
     });
 
@@ -54,7 +53,12 @@
         e.target.parentElement.remove();
       });
     });
+
+    // Afficher produits au chargement (fade-in)
+    const productCards = document.querySelectorAll('.product-card');
+    window.addEventListener('load', () => {
+      productCards.forEach(card => card.classList.add('show'));
+    });
   </script>
 </body>
-                                            </html>
-                                            
+</html>

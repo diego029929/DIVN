@@ -1,99 +1,95 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Panier</title>
-  <link rel="stylesheet" href="style.css">
-  <!-- Remplace TON_LIVE_CLIENT_ID par ton vrai Client ID PayPal -->
-  <script src="https://www.paypal.com/sdk/js?client-id=TON_LIVE_CLIENT_ID&currency=EUR"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Panier</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://www.paypal.com/sdk/js?client-id=TON_LIVE_CLIENT_ID&currency=EUR&intent=capture"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-  <header>
-    <div class="menu-burger" id="backHome"><i class="fas fa-arrow-left"></i></div>
-    <div class="search-bar">
-      <input type="text" placeholder="Retour à l'accueil">
-    </div>
-  </header>
+<header>
+  <div class="menu-burger" id="backHome"><i class="fas fa-arrow-left"></i></div>
+  <div class="search-bar">
+    <input type="text" placeholder="Retour à l'accueil">
+  </div>
+</header>
 
-  <h2 style="padding: 20px;">Mon Panier</h2>
+<h2 style="padding:20px;">Mon Panier</h2>
+<div class="products" id="cartProducts"></div>
 
-  <div class="products" id="cartProducts"></div>
-
-  <div style="padding: 20px; text-align: center;">
-    <div id="paypal-button-container"></div>
-  </div>
+<div style="padding:20px; text-align:center;">
+  <div id="paypal-button-container"></div>
+</div>
 
 <script>
-  // Retour accueil
-  document.getElementById('backHome').addEventListener('click', () => {
-    window.location.href = 'index.html';
-  });
+document.getElementById('backHome').addEventListener('click', () => {
+  window.location.href = 'index.html';
+});
 
-  // Charger panier depuis localStorage
-  function loadCart() {
-    const cartProducts = document.getElementById('cartProducts');
-    cartProducts.innerHTML = '';
-    const cart = JSON.parse(localStorage.getItem('cart')) || [];
+const cartKey = 'cart';
 
-    cart.forEach((item, index) => {
-      const card = document.createElement('div');
-      card.classList.add('product-card','show');
-      card.innerHTML = `
-        <div class="product-slider">
-          <img src="${item.image}" class="active">
-        </div>
-        <div class="product-title">${item.title}</div>
-        <div class="product-price">${item.price}</div>
-        <button class="remove-btn">Supprimer</button>
-      `;
-      card.querySelector('.remove-btn').addEventListener('click', () => {
-        cart.splice(index,1);
-        localStorage.setItem('cart', JSON.stringify(cart));
-        loadCart();
-      });
-      cartProducts.appendChild(card);
-    });
+function loadCart() {
+  const cartProducts = document.getElementById('cartProducts');
+  cartProducts.innerHTML = '';
+  const cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 
-    updatePaypal(cart);
-  }
+  cart.forEach((item, idx) => {
+    const card = document.createElement('div');
+    card.classList.add('product-card','show');
+    card.innerHTML = `
+      <img src="${item.image}">
+      <div class="product-title">${item.title}</div>
+      <div class="product-price">${parseFloat(item.price).toFixed(2)}</div>
+      <button class="remove-btn">Supprimer</button>
+    `;
+    card.querySelector('.remove-btn').addEventListener('click', () => {
+      cart.splice(idx,1);
+      localStorage.setItem(cartKey, JSON.stringify(cart));
+      loadCart();
+    });
+    cartProducts.appendChild(card);
+  });
 
-  function updatePaypal(cart) {
-    document.getElementById('paypal-button-container').innerHTML = '';
-    if(cart.length === 0) return;
+  renderPaypal(cart);
+}
 
-    paypal.Buttons({
-      createOrder: function(data, actions) {
-        return actions.order.create({
-          purchase_units: [{
-            items: cart.map(item => ({
-              name: item.title,
-              unit_amount: { currency_code: "EUR", value: item.price },
-              quantity: "1"
-            })),
-            amount: {
-              currency_code: "EUR",
-              value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2),
-              breakdown: {
-                item_total: { currency_code: "EUR", value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2) }
-              }
-            }
-          }]
-        });
-      },
-      onApprove: function(data, actions) {
-        return actions.order.capture().then(function(details) {
-          alert('Paiement effectué par ' + details.payer.name.given_name + ' !');
-          localStorage.removeItem('cart');
-          loadCart();
-        });
-      }
-    }).render('#paypal-button-container');
-  }
+function renderPaypal(cart) {
+  document.getElementById('paypal-button-container').innerHTML = '';
+  if(cart.length === 0) return;
 
-  loadCart();
+  paypal.Buttons({
+    style:{ layout:'vertical', shape:'rect', label:'pay' },
+    createOrder: (data, actions) => {
+      return actions.order.create({
+        purchase_units: [{
+          items: cart.map(item => ({
+            name: item.title,
+            unit_amount: { currency_code:"EUR", value: parseFloat(item.price).toFixed(2) },
+            quantity: "1"
+          })),
+          amount: {
+            currency_code:"EUR",
+            value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2),
+            breakdown:{ item_total: { currency_code:"EUR", value: cart.reduce((sum,item)=>sum+parseFloat(item.price),0).toFixed(2) } }
+          }
+        }]
+      });
+    },
+    onApprove: (data, actions) => {
+      return actions.order.capture().then(details => {
+        console.log("Paiement effectué :", details);
+        localStorage.removeItem(cartKey);
+        loadCart();
+      });
+    },
+    funding: { allowed: [paypal.FUNDING.CARD, paypal.FUNDING.PAYPAL, paypal.FUNDING.CREDIT] }
+  }).render('#paypal-button-container');
+}
+
+loadCart();
 </script>
 </body>
 </html>

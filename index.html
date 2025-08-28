@@ -1,27 +1,36 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DIVN Shop</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Icônes (loupe, menu burger) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
-<!-- HEADER -->
+<!-- HEADER avec menu + search -->
 <header>
-  <div class="logo">DIVN</div>
-  <div class="search-bar"><input type="text" placeholder="Rechercher..."></div>
-  <div class="menu-burger">&#9776;</div>
+  <div class="menu-burger"><i class="fas fa-bars"></i></div>
+  <div class="search-bar">
+    <input type="text" placeholder="Rechercher un produit...">
+    <button><i class="fas fa-search"></i></button>
+  </div>
 </header>
 
-<!-- BANNER IMAGE -->
-<div class="banner"></div>
+<!-- BANNIÈRE -->
+<div class="banner">
+  <div class="banner-overlay">
+    <h1>Nouvelle Collection</h1>
+    <p>Minimaliste. Discret. Élégant.</p>
+  </div>
+</div>
 
 <!-- TRI -->
 <div class="filter">
-  Trier par : 
-  <select>
+  <label for="sort">Trier par :</label>
+  <select id="sort">
     <option value="pertinence">Pertinence</option>
     <option value="asc">Prix croissant</option>
     <option value="desc">Prix décroissant</option>
@@ -32,9 +41,9 @@
 <div class="products">
   <div class="product-card">
     <div class="product-slider">
-      <img src="https://via.placeholder.com/300x200?text=Produit+1A" class="active">
-      <img src="https://via.placeholder.com/300x200?text=Produit+1B">
-      <img src="https://via.placeholder.com/300x200?text=Produit+1C">
+      <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
+      <img src="https://via.placeholder.com/300x300?text=Produit+1B">
+      <img src="https://via.placeholder.com/300x300?text=Produit+1C">
       <div class="slider-dots">
         <span class="active"></span>
         <span></span>
@@ -47,8 +56,8 @@
 
   <div class="product-card">
     <div class="product-slider">
-      <img src="https://via.placeholder.com/300x200?text=Produit+2A" class="active">
-      <img src="https://via.placeholder.com/300x200?text=Produit+2B">
+      <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
+      <img src="https://via.placeholder.com/300x300?text=Produit+2B">
       <div class="slider-dots">
         <span class="active"></span>
         <span></span>
@@ -61,5 +70,5 @@
 
 <script src="script.js"></script>
 </body>
-  </html>
-
+      </html>
+      

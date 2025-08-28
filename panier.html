@@ -21,23 +21,7 @@
 
   <!-- PRODUITS PANIER -->
   <div class="products" id="cartProducts">
-    <div class="product-card">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
-      </div>
-      <div class="product-title">Produit 1</div>
-      <div class="product-price">49,99 €</div>
-      <button class="remove-btn">Supprimer</button>
-    </div>
-
-    <div class="product-card">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
-      </div>
-      <div class="product-title">Produit 2</div>
-      <div class="product-price">59,99 €</div>
-      <button class="remove-btn">Supprimer</button>
-    </div>
+    <!-- Les produits seront ajoutés dynamiquement -->
   </div>
 
   <script>
@@ -46,19 +30,32 @@
       window.location.href = 'index.html';
     });
 
-    // SUPPRESSION PRODUITS
-    const removeBtns = document.querySelectorAll('.remove-btn');
-    removeBtns.forEach(btn => {
-      btn.addEventListener('click', e => {
-        e.target.parentElement.remove();
-      });
-    });
+    // Fonction pour ajouter un produit au panier
+    function addToCart(title, price, imageUrl) {
+      const cartProducts = document.getElementById('cartProducts');
 
-    // Afficher produits au chargement (fade-in)
-    const productCards = document.querySelectorAll('.product-card');
-    window.addEventListener('load', () => {
-      productCards.forEach(card => card.classList.add('show'));
-    });
+      const card = document.createElement('div');
+      card.classList.add('product-card', 'show');
+
+      card.innerHTML = `
+        <div class="product-slider">
+          <img src="${imageUrl}" class="active">
+        </div>
+        <div class="product-title">${title}</div>
+        <div class="product-price">${price}</div>
+        <button class="remove-btn">Supprimer</button>
+      `;
+
+      // Supprimer le produit
+      card.querySelector('.remove-btn').addEventListener('click', () => {
+        card.remove();
+      });
+
+      cartProducts.appendChild(card);
+    }
+
+    // Exemple pour tester (sera retiré plus tard)
+    // addToCart("Produit Test", "49,99 €", "https://via.placeholder.com/300x300?text=Test");
   </script>
 </body>
 </html>

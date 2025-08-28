@@ -17,19 +17,35 @@ document.querySelectorAll('.product-slider').forEach(slider => {
 const menuBtn = document.querySelector('.menu-burger');
 const sideMenu = document.getElementById('sideMenu');
 const closeBtn = document.getElementById('closeMenu');
-const overlay = document.getElementById('overlay');
+const overlay = document.querySelector('.overlay');
 
 menuBtn.addEventListener('click', () => {
-  sideMenu.classList.add('open');
-  overlay.classList.add('show');
+  sideMenu.classList.add('active');
+  overlay.classList.add('active');
 });
 
 closeBtn.addEventListener('click', () => {
-  sideMenu.classList.remove('open');
-  overlay.classList.remove('show');
+  sideMenu.classList.remove('active');
+  overlay.classList.remove('active');
 });
 
 overlay.addEventListener('click', () => {
-  sideMenu.classList.remove('open');
-  overlay.classList.remove('show');
+  sideMenu.classList.remove('active');
+  overlay.classList.remove('active');
+  searchOverlay.classList.remove('active');
+});
+
+// SEARCH BAR OVERLAY
+const searchBtn = document.getElementById('searchBtn');
+const searchOverlay = document.getElementById('searchOverlay');
+const closeSearch = document.getElementById('closeSearch');
+
+searchBtn.addEventListener('click', () => {
+  searchOverlay.classList.add('active');
+  overlay.classList.add('active');
+});
+
+closeSearch.addEventListener('click', () => {
+  searchOverlay.classList.remove('active');
+  overlay.classList.remove('active');
 });

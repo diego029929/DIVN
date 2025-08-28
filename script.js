@@ -171,14 +171,13 @@ productCards.forEach(card => {
   });
 });
 
-// CLIQUE SUR MENU (corrigé pour permettre navigation directe)
+// CLIQUE SUR MENU (navigation directe)
 document.querySelectorAll('.side-menu ul li a').forEach(link => {
   link.addEventListener('click', () => {
-    // Fermer menu et overlay
     sideMenu.classList.remove('active');
     overlay.classList.remove('show');
     document.body.style.overflow = "";
-    // Le lien <a> agit normalement grâce au href
+    // Le href des liens gère la navigation
   });
 });
 

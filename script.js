@@ -38,58 +38,67 @@ overlay.addEventListener('click', () => {
 });
 
 // BARRE DE RECHERCHE
-const searchInput = document.querySelector('.search-bar input');
+const searchInput = document.getElementById('searchInput');
 const searchBar = document.querySelector('.search-bar');
 const searchBtn = document.getElementById('searchBtn');
-const productContainer = document.querySelector('.products');
+const productsContainer = document.querySelector('.products');
 
 [searchInput, searchBtn].forEach(el => {
-  el.addEventListener('focus', () => searchBar.classList.add('active'));
-  el.addEventListener('blur', () => searchBar.classList.remove('active'));
+  el.addEventListener('click', () => searchBar.classList.add('active'));
 });
 
-// FILTRAGE + TRI
-function normalize(str) {
-  return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+searchInput.addEventListener('blur', () => searchBar.classList.remove('active'));
+
+// Fonction de tri par pertinence
+function relevanceScore(productTitle, query) {
+  if (!query) return 0;
+  const titleWords = productTitle.toLowerCase().split(/\s+/);
+  const queryWords = query.toLowerCase().split(/\s+/);
+
+  let score = 0;
+  queryWords.forEach(q => {
+    titleWords.forEach(t => {
+      if (t.includes(q)) score += 2;   // mot trouvé
+      if (t === q) score += 3;         // mot exact
+    });
+  });
+  return score;
 }
 
-function similarity(str, keyword) {
-  const words = normalize(str).split(" ");
-  const keys = normalize(keyword).split(" ");
-  return keys.reduce((score, key) => score + (words.includes(key) ? 1 : 0), 0);
-}
-
-function filterProducts() {
+// Fonction de rendu produits
+function renderProducts() {
   const query = searchInput.value.trim();
-  const sort = document.getElementById('sort').value;
-  let cards = Array.from(document.querySelectorAll('.product-card'));
+  const sortValue = document.getElementById('sort').value;
 
-  // Calcul pertinence
-  cards.forEach(card => {
-    card.dataset.score = similarity(card.dataset.title, query);
+  let products = Array.from(document.querySelectorAll('.product-card'));
+
+  // Filtrage + pertinence
+  products = products.map(p => {
+    return {
+      element: p,
+      title: p.dataset.title,
+      price: parseFloat(p.dataset.price),
+      score: relevanceScore(p.dataset.title, query)
+    };
   });
 
-  // Filtrer si recherche
-  if(query !== "") {
-    cards = cards.filter(card => card.dataset.score > 0);
-  }
-
   // Tri
-  if(sort === "pertinence") {
-    cards.sort((a, b) => b.dataset.score - a.dataset.score);
-  } else if(sort === "asc") {
-    cards.sort((a, b) => parseFloat(a.dataset.price) - parseFloat(b.dataset.price));
-  } else if(sort === "desc") {
-    cards.sort((a, b) => parseFloat(b.dataset.price) - parseFloat(a.dataset.price));
+  if (sortValue === "asc") {
+    products.sort((a, b) => a.price - b.price);
+  } else if (sortValue === "desc") {
+    products.sort((a, b) => b.price - a.price);
+  } else { 
+    products.sort((a, b) => b.score - a.score); // pertinence
   }
 
-  // Afficher
-  productContainer.innerHTML = "";
-  cards.forEach(c => productContainer.appendChild(c));
+  // Réinjection
+  productsContainer.innerHTML = "";
+  products.forEach(p => productsContainer.appendChild(p.element));
 }
 
-searchInput.addEventListener("input", filterProducts);
-document.getElementById("sort").addEventListener("change", filterProducts);
+// Événements recherche & tri
+searchInput.addEventListener('input', renderProducts);
+document.getElementById('sort').addEventListener('change', renderProducts);
 
 // PRODUITS ANIMATION AU SCROLL
 const productCards = document.querySelectorAll('.product-card');
@@ -102,7 +111,10 @@ function showProductsOnScroll() {
   });
 }
 
-window.addEventListener('load', () => productCards.forEach(card => card.classList.add('show')));
+window.addEventListener('load', () => {
+  productCards.forEach(card => card.classList.add('show'));
+  renderProducts();
+});
 window.addEventListener('scroll', showProductsOnScroll);
 
 // CLIQUE SUR PRODUITS -> produit.html
@@ -157,3 +169,4 @@ document.querySelector('header').appendChild(cartIcon);
 cartIcon.addEventListener('click', () => {
   window.location.href = 'panier.html';
 });
+        

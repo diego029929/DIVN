@@ -35,6 +35,12 @@ header {
   overflow: hidden;
   box-shadow: inset 0 0 15px rgba(255,255,255,0.08);
   height: 45px;
+  transition: all 0.3s ease;
+}
+
+.search-bar.active {
+  transform: scale(1.05);
+  box-shadow: 0 0 12px rgba(255,255,255,0.15);
 }
 
 .search-bar input {
@@ -192,6 +198,11 @@ header {
   left: 0;
 }
 
+.menu-content {
+  display: flex;
+  flex-direction: column;
+}
+
 .side-menu-header {
   text-align: right;
   font-size: 2rem;
@@ -238,8 +249,7 @@ header {
   display: flex;
   justify-content: center;
   gap: 20px;
-  margin-top: auto;
-  padding-top: 20px;
+  margin-top: 40px; /* remontés un peu */
 }
 
 .social-links a {
@@ -250,4 +260,5 @@ header {
 
 .social-links a:hover {
   transform: scale(1.2);
-}
+  }
+                                

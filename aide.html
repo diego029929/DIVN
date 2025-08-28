@@ -77,6 +77,45 @@
     </div>
   </div>
 
+  <script>
+    // MENU BURGER
+    const menuBtn = document.querySelector('.menu-burger');
+    const sideMenu = document.getElementById('sideMenu');
+    const closeBtn = document.getElementById('closeMenu');
+    const overlay = document.getElementById('overlay');
+
+    menuBtn.addEventListener('click', () => {
+      sideMenu.classList.add('active');
+      overlay.classList.add('show');
+      document.body.style.overflow = "hidden";
+    });
+    closeBtn.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      overlay.classList.remove('show');
+      document.body.style.overflow = "";
+    });
+    overlay.addEventListener('click', () => {
+      sideMenu.classList.remove('active');
+      overlay.classList.remove('show');
+      document.body.style.overflow = "";
+    });
+
+    // NAVIGATION UNIVERSELLE
+    document.querySelectorAll('.side-menu ul li a').forEach(link => {
+      link.addEventListener('click', e => {
+        e.preventDefault();
+        const text = link.textContent.trim();
+        let page = 'index.html';
+        if(text.includes('Tous nos produits')) page = 'index.html';
+        else if(text.includes("L'histoire")) page = 'histoire.html';
+        else if(text.includes("Besoin d'aide")) page = 'aide.html';
+        else if(text.includes('The FAM')) page = 'fam.html';
+        else if(text.includes('L’équipage')) page = 'equipage.html';
+        else if(text.includes('Créer un compte')) page = 'compte.html';
+        window.location.href = page;
+      });
+    });
+  </script>
   <script src="script.js"></script>
 </body>
           </html>

@@ -1,211 +1,213 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Créer un compte - DIVN</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    .account-content {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      font-family: 'Poppins', sans-serif;
-      color: #fff;
-      font-size: 1rem;
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Créer un compte - DIVN</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: #0e0e0e;
+      color: #fff;
+    }
 
-    .account-content h1 {
-      text-align: center;
-      margin-bottom: 20px;
-    }
+    /* HEADER CLEAN */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 40px;
+      background: #111;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+    .logo {
+      font-weight: 700;
+      font-size: 1.2rem;
+      letter-spacing: 1px;
+    }
+    .nav-links {
+      display: flex;
+      gap: 25px;
+      align-items: center;
+    }
+    .nav-links a {
+      color: #f5f5f5;
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+    .nav-links a:hover { color: #bbb; }
+    .nav-actions {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+    }
+    .nav-actions i {
+      font-size: 1.1rem;
+      cursor: pointer;
+      color: #f5f5f5;
+      transition: color 0.3s;
+    }
+    .nav-actions i:hover { color: #bbb; }
 
-    .account-content form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .account-content input {
-      padding: 10px;
-      border-radius: 6px;
-      border: none;
-      background: #111;
-      color: #fff;
-    }
-
-    .account-content button {
-      padding: 10px;
-      border: none;
-      border-radius: 6px;
-      background: #fff;
-      color: #111;
-      font-weight: 600;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .account-content button:hover {
-      background: #f5f5f5;
-    }
-
-    .switch-form {
-      text-align: center;
-      margin-top: 10px;
-      cursor: pointer;
-      color: #bbb;
-    }
-    .switch-form:hover {
-      color: #fff;
-    }
-  </style>
+    /* FORMULAIRE CLEAN */
+    .account-section {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: calc(100vh - 80px);
+      padding: 40px 20px;
+    }
+    .account-box {
+      width: 100%;
+      max-width: 420px;
+      background: #1a1a1a;
+      padding: 35px;
+      border-radius: 16px;
+      box-shadow: 0 6px 24px rgba(0,0,0,0.5);
+      text-align: center;
+    }
+    .account-box h1 {
+      margin-bottom: 25px;
+      font-size: 1.6rem;
+      font-weight: 600;
+    }
+    .account-box form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+    .account-box input {
+      padding: 12px;
+      border-radius: 8px;
+      border: none;
+      background: #111;
+      color: #fff;
+      font-size: 0.95rem;
+      outline: none;
+    }
+    .account-box input:focus {
+      background: #181818;
+      box-shadow: 0 0 0 2px #444 inset;
+    }
+    .account-box button {
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      background: #fff;
+      color: #111;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    .account-box button:hover {
+      background: #f5f5f5;
+      transform: translateY(-2px);
+    }
+    .switch-form {
+      margin-top: 15px;
+      color: #bbb;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+    .switch-form:hover { color: #fff; }
+  </style>
 </head>
 <body>
 
-  <!-- HEADER -->
-  <header style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#222; box-shadow:0 2px 10px rgba(255,255,255,0.05); position:sticky; top:0; z-index:1000;">
-    <div class="menu-burger"><i class="fas fa-bars"></i></div>
-    <a href="index.html" style="color:#f5f5f5; text-decoration:none; font-weight:600; font-size:1rem;">Accueil</a>
-  </header>
+  <!-- HEADER -->
+  <header>
+    <div class="logo">DIVN</div>
+    <nav class="nav-links">
+      <a href="index.html">Accueil</a>
+      <a href="histoire.html">L'histoire</a>
+      <a href="fam.html">The FAM</a>
+      <a href="equipage.html">Équipage</a>
+    </nav>
+    <div class="nav-actions">
+      <i class="fas fa-user"></i>
+      <i class="fas fa-shopping-cart"></i>
+    </div>
+  </header>
 
-  <!-- CONTENU COMPTE -->
-  <div class="account-content" id="accountContent">
-    <h1 id="formTitle">Créer un compte</h1>
-    <form id="accountForm">
-      <input type="text" id="username" placeholder="Nom d'utilisateur" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Mot de passe" required>
-      <button type="submit" id="submitBtn">S'inscrire</button>
-    </form>
-    <div class="switch-form" id="switchForm">Vous avez déjà un compte ? Se connecter</div>
-  </div>
+  <!-- SECTION COMPTE -->
+  <section class="account-section">
+    <div class="account-box">
+      <h1 id="formTitle">Créer un compte</h1>
+      <form id="accountForm">
+        <input type="text" id="username" placeholder="Nom d'utilisateur" required>
+        <input type="email" id="email" placeholder="Email" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
+        <button type="submit" id="submitBtn">S'inscrire</button>
+      </form>
+      <div class="switch-form" id="switchForm">
+        Vous avez déjà un compte ? <span style="text-decoration: underline;">Se connecter</span>
+      </div>
+    </div>
+  </section>
 
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
+  <script>
+    // GESTION DU FORMULAIRE
+    const accountForm = document.getElementById('accountForm');
+    const switchForm = document.getElementById('switchForm');
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
 
-  <!-- MENU LATERAL -->
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-content">
-      <div class="side-menu-header">
-        <span id="closeMenu">&times;</span>
-      </div>
-      <ul>
-        <li><a href="#"><i class="fas fa-box"></i> Tous nos produits</a></li>
-        <li><a href="histoire.html"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
-        <li><a href="aide.html"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
-        <li><a href="fam.html"><i class="fas fa-users"></i> The FAM</a></li>
-        <li><a href="equipage.html"><i class="fas fa-ship"></i> L’équipage</a></li>
-        <li><a href="#"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
-      </ul>
+    let isLogin = false;
 
-      <div class="social-links">
-        <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </div>
+    switchForm.addEventListener('click', () => {
+      isLogin = !isLogin;
+      if(isLogin){
+        formTitle.textContent = "Se connecter";
+        submitBtn.textContent = "Se connecter";
+        usernameInput.style.display = "none";
+        switchForm.innerHTML = "Vous n'avez pas de compte ? <span style='text-decoration: underline;'>Créer un compte</span>";
+      } else {
+        formTitle.textContent = "Créer un compte";
+        submitBtn.textContent = "S'inscrire";
+        usernameInput.style.display = "block";
+        switchForm.innerHTML = "Vous avez déjà un compte ? <span style='text-decoration: underline;'>Se connecter</span>";
+      }
+    });
 
-  <script>
-    // MENU BURGER
-    const menuBtn = document.querySelector('.menu-burger');
-    const sideMenu = document.getElementById('sideMenu');
-    const closeBtn = document.getElementById('closeMenu');
-    const overlay = document.getElementById('overlay');
+    accountForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const username = usernameInput.value.trim();
+      const email = emailInput.value.trim();
+      const password = document.getElementById('password').value.trim();
 
-    menuBtn.addEventListener('click', () => {
-      sideMenu.classList.add('active');
-      overlay.classList.add('show');
-      document.body.style.overflow = "hidden";
-    });
-    closeBtn.addEventListener('click', () => {
-      sideMenu.classList.remove('active');
-      overlay.classList.remove('show');
-      document.body.style.overflow = "";
-    });
-    overlay.addEventListener('click', () => {
-      sideMenu.classList.remove('active');
-      overlay.classList.remove('show');
-      document.body.style.overflow = "";
-    });
+      let users = JSON.parse(localStorage.getItem('users')) || [];
 
-    // FORMULAIRES COMPTE
-    const accountForm = document.getElementById('accountForm');
-    const switchForm = document.getElementById('switchForm');
-    const formTitle = document.getElementById('formTitle');
-    const submitBtn = document.getElementById('submitBtn');
-    const usernameInput = document.getElementById('username');
-    const emailInput = document.getElementById('email');
-
-    let isLogin = false; // false = inscription, true = connexion
-
-    switchForm.addEventListener('click', () => {
-      isLogin = !isLogin;
-      if(isLogin){
-        formTitle.textContent = "Se connecter";
-        submitBtn.textContent = "Se connecter";
-        usernameInput.style.display = "none";
-        switchForm.textContent = "Vous n'avez pas de compte ? Créer un compte";
-      } else {
-        formTitle.textContent = "Créer un compte";
-        submitBtn.textContent = "S'inscrire";
-        usernameInput.style.display = "block";
-        switchForm.textContent = "Vous avez déjà un compte ? Se connecter";
-      }
-    });
-
-    accountForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = usernameInput.value.trim();
-      const email = emailInput.value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      let users = JSON.parse(localStorage.getItem('users')) || [];
-
-      if(!isLogin){
-        // INSCRIPTION
-        if(users.find(u => u.email === email)){
-          alert("Un compte avec cet email existe déjà !");
-          return;
-        }
-        users.push({ username, email, password, cart: [] });
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Compte créé avec succès !");
-      } else {
-        // CONNEXION uniquement avec email + password
-        const user = users.find(u => u.email === email && u.password === password);
-        if(user){
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          alert("Connecté avec succès !");
-        } else {
-          alert("Email ou mot de passe incorrect !");
-        }
-      }
-
-      accountForm.reset();
-    });
-
-    // NAVIGATION UNIVERSELLE
-    function setupNavigation(){
-      document.querySelectorAll('.side-menu ul li a').forEach(link => {
-        link.addEventListener('click', e => {
-          e.preventDefault();
-          const text = link.textContent.trim();
-          let page = 'index.html';
-          if(text.includes('Tous nos produits')) page = 'index.html';
-          else if(text.includes("L'histoire")) page = 'histoire.html';
-          else if(text.includes("Besoin d'aide")) page = 'aide.html';
-          else if(text.includes('The FAM')) page = 'fam.html';
-          else if(text.includes('L’équipage')) page = 'equipage.html';
-          else if(text.includes('Créer un compte')) page = 'compte.html';
-          window.location.href = page;
-        });
-      });
-    }
-    setupNavigation();
-  </script>
+      if(!isLogin){
+        if(users.find(u => u.email === email)){
+          alert("Un compte avec cet email existe déjà !");
+          return;
+        }
+        users.push({ username, email, password, cart: [] });
+        localStorage.setItem('users', JSON.stringify(users));
+        alert("Compte créé avec succès !");
+      } else {
+        const user = users.find(u => u.email === email && u.password === password);
+        if(user){
+          localStorage.setItem('currentUser', JSON.stringify(user));
+          alert("Connecté avec succès !");
+        } else {
+          alert("Email ou mot de passe incorrect !");
+        }
+      }
+      accountForm.reset();
+    });
+  </script>
 </body>
 </html>

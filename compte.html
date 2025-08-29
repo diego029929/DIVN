@@ -138,57 +138,46 @@
   </div>
 
   <script>
-    // ===== HASH MOT DE PASSE AVEC SHA-256 =====
-    async function hashPassword(password) {
-      const encoder = new TextEncoder();
-      const data = encoder.encode(password);
-      const hashBuffer = await crypto.subtle.digest('SHA-256', data);
-      const hashArray = Array.from(new Uint8Array(hashBuffer));
-      const hashHex = hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-      return hashHex;
-    }
-
-    async function verifyPassword(input, stored) {
-      const hashedInput = await hashPassword(input);
-      return hashedInput === stored;
-    }
-
-    // ELEMENTS
+    // MENU BURGER
     const menuBtn = document.querySelector('.menu-burger');
     const sideMenu = document.getElementById('sideMenu');
     const closeBtn = document.getElementById('closeMenu');
     const overlay = document.getElementById('overlay');
 
-    const accountForm = document.getElementById('accountForm');
-    const switchForm = document.getElementById('switchForm');
-    const formTitle = document.getElementById('formTitle');
-    const submitBtn = document.getElementById('submitBtn');
-    const usernameInput = document.getElementById('username');
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-
-    let isLogin = false;
-
-    // MENU BURGER
     menuBtn.addEventListener('click', () => {
       sideMenu.classList.add('active');
       overlay.classList.add('show');
       document.body.style.overflow = "hidden";
     });
-
     closeBtn.addEventListener('click', () => {
       sideMenu.classList.remove('active');
       overlay.classList.remove('show');
       document.body.style.overflow = "";
     });
-
     overlay.addEventListener('click', () => {
       sideMenu.classList.remove('active');
       overlay.classList.remove('show');
       document.body.style.overflow = "";
     });
 
-    // SWITCH ENTRE CREATION ET CONNEXION
+    // FUNCTION SHA-256
+    async function hashPassword(password) {
+      const msgUint8 = new TextEncoder().encode(password);
+      const hashBuffer = await crypto.subtle.digest('SHA-256', msgUint8);
+      const hashArray = Array.from(new Uint8Array(hashBuffer));
+      return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+    }
+
+    // FORMULAIRES COMPTE
+    const accountForm = document.getElementById('accountForm');
+    const switchForm = document.getElementById('switchForm');
+    const formTitle = document.getElementById('formTitle');
+    const submitBtn = document.getElementById('submitBtn');
+    const usernameInput = document.getElementById('username');
+    const emailInput = document.getElementById('email');
+
+    let isLogin = false;
+
     switchForm.addEventListener('click', () => {
       isLogin = !isLogin;
       if(isLogin){
@@ -202,33 +191,28 @@
         usernameInput.style.display = "block";
         switchForm.textContent = "Vous avez déjà un compte ? Se connecter";
       }
-      accountForm.reset();
     });
 
-    // GESTION FORMULAIRE
     accountForm.addEventListener('submit', async (e) => {
       e.preventDefault();
-
       const username = usernameInput.value.trim();
       const email = emailInput.value.trim();
-      const password = passwordInput.value.trim();
+      const password = document.getElementById('password').value.trim();
+      const hashedPassword = await hashPassword(password);
 
       let users = JSON.parse(localStorage.getItem('users')) || [];
 
       if(!isLogin){
-        // CREATION DE COMPTE
         if(users.find(u => u.email === email)){
           alert("Un compte avec cet email existe déjà !");
           return;
         }
-        const hashedPassword = await hashPassword(password);
         users.push({ username, email, password: hashedPassword, cart: [] });
         localStorage.setItem('users', JSON.stringify(users));
         alert("Compte créé avec succès !");
       } else {
-        // CONNEXION
-        const user = users.find(u => u.email === email);
-        if(user && await verifyPassword(password, user.password)){
+        const user = users.find(u => u.email === email && u.password === hashedPassword);
+        if(user){
           localStorage.setItem('currentUser', JSON.stringify(user));
           alert("Connecté avec succès !");
         } else {

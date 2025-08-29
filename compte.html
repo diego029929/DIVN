@@ -232,7 +232,6 @@
         if(user && await verifyPassword(password, user.password)){
           localStorage.setItem('currentUser', JSON.stringify(user));
           alert("Connecté avec succès !");
-          window.location.href = "index.html"; // redirection après connexion
         } else {
           alert("Email ou mot de passe incorrect !");
         }

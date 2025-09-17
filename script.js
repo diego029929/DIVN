@@ -26,4 +26,3 @@ sortSelect.addEventListener("change", () => {
 
   products.forEach(product => productsContainer.appendChild(product));
 });
-

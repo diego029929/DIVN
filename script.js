@@ -1,4 +1,6 @@
+// -----------------------------
 // SLIDER (4 images par produit)
+// -----------------------------
 document.querySelectorAll('.product-slider').forEach(slider => {
   const slides = slider.querySelectorAll('img');
   const dots = slider.querySelectorAll('.slider-dots span');
@@ -13,7 +15,9 @@ document.querySelectorAll('.product-slider').forEach(slider => {
   });
 });
 
+// -----------------------------
 // MENU BURGER
+// -----------------------------
 const menuBtn = document.querySelector('.menu-burger');
 const sideMenu = document.getElementById('sideMenu');
 const closeBtn = document.getElementById('closeMenu');
@@ -37,7 +41,9 @@ overlay.addEventListener('click', () => {
   document.body.style.overflow = "";
 });
 
+// -----------------------------
 // BARRE DE RECHERCHE
+// -----------------------------
 const searchInput = document.querySelector('.search-bar input');
 const searchBar = document.querySelector('.search-bar');
 const searchBtn = document.getElementById('searchBtn');
@@ -48,7 +54,9 @@ const productContainer = document.querySelector('.products');
   el.addEventListener('blur', () => searchBar.classList.remove('active'));
 });
 
+// -----------------------------
 // FILTRAGE + TRI
+// -----------------------------
 function normalize(str) {
   return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "");
 }
@@ -91,7 +99,9 @@ function filterProducts() {
 searchInput.addEventListener("input", filterProducts);
 document.getElementById("sort").addEventListener("change", filterProducts);
 
+// -----------------------------
 // PRODUITS ANIMATION AU SCROLL
+// -----------------------------
 const productCards = document.querySelectorAll('.product-card');
 
 function showProductsOnScroll() {
@@ -105,23 +115,27 @@ function showProductsOnScroll() {
 window.addEventListener('load', () => productCards.forEach(card => card.classList.add('show')));
 window.addEventListener('scroll', showProductsOnScroll);
 
-// CLIQUE SUR PRODUITS -> produit.html
-productCards.forEach(card => {
+// -----------------------------
+// CLIQUE SUR PRODUITS -> PAGES PRODUIT
+// -----------------------------
+const productPages = [
+  'produit1.html',
+  'produit2.html',
+  'produit3.html',
+  'produit4.html',
+  'produit5.html',
+  'produit6.html'
+];
+
+productCards.forEach((card, index) => {
   card.addEventListener('click', () => {
-        const text = link.textContent.trim();
-    let page = 'index.html';
-    if(text.includes('Tous nos produits')) page = 'produit1.html';
-    else if(text.includes("")) page = 'produit2.html';
-    else if(text.includes("")) page = 'produit3.html';
-    else if(text.includes("')) page = 'produit4.html';
-    else if(text.includes('')) page = 'produit5.html';
-    else if(text.includes('')) page = 'produit6.html';
-    window.location.href = page;
-    
+    window.location.href = productPages[index] || 'index.html';
   });
 });
 
+// -----------------------------
 // CLIQUE SUR MENU
+// -----------------------------
 document.querySelectorAll('.side-menu ul li a').forEach(link => {
   link.addEventListener('click', e => {
     e.preventDefault();
@@ -137,9 +151,11 @@ document.querySelectorAll('.side-menu ul li a').forEach(link => {
   });
 });
 
+// -----------------------------
 // PROFIL
+// -----------------------------
 const profileIcon = document.querySelector('.profile-icon');
 profileIcon.addEventListener('click', () => {
   window.location.href = 'compte.html';
 });
-                         
+    

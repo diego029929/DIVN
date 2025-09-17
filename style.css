@@ -1,0 +1,150 @@
+/* Thème sombre général */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #121212;
+  color: #eee;
+}
+
+/* Bannière */
+.banner {
+  display: flex;
+  align-items: center;
+  background-color: #1f1f1f;
+  padding: 10px;
+  position: relative;
+}
+
+/* Petit bonhomme */
+.bonhomme {
+  width: 30px;
+  height: 30px;
+  background: #eee;
+  border-radius: 50%;
+  position: relative;
+}
+.bonhomme::after {
+  content: '';
+  position: absolute;
+  bottom: -12px;
+  left: 7px;
+  width: 16px;
+  height: 16px;
+  background: #eee;
+  border-radius: 50%;
+}
+
+/* Barre de recherche */
+.search-container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+.search-bar {
+  width: 200px;
+  padding: 6px;
+  border: none;
+  border-radius: 20px;
+  transition: all 0.3s ease;
+}
+.search-bar:focus {
+  width: 400px;
+  background: #fff;
+  color: #000;
+  box-shadow: 0 0 0 10000px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 10;
+}
+
+/* Sidebar */
+.sidebar {
+  position: absolute;
+  left: 10px;
+  top: 10px;
+}
+.menu-btn {
+  background: none;
+  color: #eee;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+}
+.menu {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 0;
+  display: none;
+  background: #222;
+  border-radius: 8px;
+}
+.menu li {
+  padding: 10px;
+}
+.menu li a {
+  color: #eee;
+  text-decoration: none;
+}
+.menu li a:hover {
+  color: #ff9800;
+}
+
+/* Image section */
+.hero {
+  text-align: center;
+  margin: 20px 0;
+}
+.hero img {
+  width: 80%;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+}
+
+/* Tri */
+.sort-section {
+  margin: 20px;
+  text-align: center;
+}
+select {
+  padding: 6px;
+  border-radius: 5px;
+  border: none;
+  background: #1f1f1f;
+  color: #eee;
+}
+
+/* Produits */
+.products {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  padding: 20px;
+}
+.product {
+  background: #1f1f1f;
+  border-radius: 10px;
+  padding: 15px;
+  text-align: center;
+  width: 200px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.6);
+  transition: transform 0.2s ease;
+}
+.product:hover {
+  transform: scale(1.05);
+}
+.product img {
+  width: 100%;
+  border-radius: 8px;
+}
+.product a {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 6px 12px;
+  background: #ff9800;
+  color: #000;
+  text-decoration: none;
+  border-radius: 6px;
+}
+.product a:hover {
+  background: #ffa726;
+  }

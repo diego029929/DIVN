@@ -5,36 +5,37 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Shop DIVN</title>
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
 <body>
   <!-- Header -->
   <header class="topbar">
-    <button class="menu-toggle"><i class="fas fa-bars"></i></button>
+    <button class="menu-toggle">&#9776;</button>
     <div class="search-box">
       <input type="text" placeholder="Rechercher un produit...">
       <button><i class="fas fa-search"></i></button>
     </div>
-    <button class="cart-btn"><i class="fas fa-shopping-cart"></i></button>
+    <a href="login.html" class="user-icon">
+      <div class="bonhomme"></div>
+    </a>
   </header>
 
   <!-- Menu latéral -->
   <aside class="sidebar">
-    <button class="close-btn"><i class="fas fa-times"></i></button>
+    <button class="close-btn">&times;</button>
     <ul>
-      <li><i class="fas fa-box"></i> <a href="produits.html">Tous nos produits</a></li>
-      <li><i class="fas fa-book"></i> <a href="histoire.html">L'histoire de DIVN</a></li>
-      <li><i class="fas fa-question-circle"></i> <a href="aide.html">Besoin d'aide ?</a></li>
-      <li><i class="fas fa-users"></i> <a href="fam.html">The FAM</a></li>
-      <li><i class="fas fa-ship"></i> <a href="equipage.html">L'équipage</a></li>
-      <li><i class="fas fa-user-plus"></i> <a href="compte.html">Créer un compte</a></li>
+      <li><a href="produits.html">Tous nos produits</a></li>
+      <li><a href="histoire.html">L'histoire de DIVN</a></li>
+      <li><a href="aide.html">Besoin d'aide ?</a></li>
+      <li><a href="fam.html">The FAM</a></li>
+      <li><a href="equipage.html">L'équipage</a></li>
+      <li><a href="compte.html">Créer un compte</a></li>
     </ul>
-    <div class="socials">
-      <a href="#"><i class="fab fa-tiktok"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-twitter"></i></a>
-    </div>
   </aside>
+
+  <!-- Section image -->
+  <section class="hero">
+    <img src="https://via.placeholder.com/1000x300" alt="Image de présentation">
+  </section>
 
   <!-- Tri -->
   <div class="sort-box">
@@ -49,37 +50,31 @@
   <main class="products">
     <div class="product" data-price="49.99">
       <img src="https://via.placeholder.com/300x200" alt="Produit 1">
-      <h3>Produit 1 Écharpe Élégante</h3>
+      <h3>Écharpe Élégante</h3>
       <p class="price">49,99 €</p>
-      <button class="add-cart"><i class="fas fa-cart-plus"></i> +</button>
     </div>
     <div class="product" data-price="59.99">
       <img src="https://via.placeholder.com/300x200" alt="Produit 2">
-      <h3>Produit 2 Écharpe Hiver</h3>
+      <h3>Écharpe Hiver</h3>
       <p class="price">59,99 €</p>
-      <button class="add-cart"><i class="fas fa-cart-plus"></i> +</button>
     </div>
     <div class="product" data-price="79.99">
       <img src="https://via.placeholder.com/300x200" alt="Produit 3">
-      <h3>Produit 3 Écharpe Douce</h3>
+      <h3>Écharpe Douce</h3>
       <p class="price">79,99 €</p>
-      <button class="add-cart"><i class="fas fa-cart-plus"></i> +</button>
     </div>
     <div class="product" data-price="39.99">
       <img src="https://via.placeholder.com/300x200" alt="Produit 4">
-      <h3>Produit 4 Écharpe Moderne</h3>
+      <h3>Écharpe Moderne</h3>
       <p class="price">39,99 €</p>
-      <button class="add-cart"><i class="fas fa-cart-plus"></i> +</button>
     </div>
     <div class="product" data-price="29.99">
       <img src="https://via.placeholder.com/300x200" alt="Produit 5">
-      <h3>Produit 5 Écharpe Tendance</h3>
+      <h3>Écharpe Tendance</h3>
       <p class="price">29,99 €</p>
-      <button class="add-cart"><i class="fas fa-cart-plus"></i> +</button>
     </div>
   </main>
 
   <script src="script.js"></script>
 </body>
-  </html>
-                                             
+</html>

@@ -108,7 +108,16 @@ window.addEventListener('scroll', showProductsOnScroll);
 // CLIQUE SUR PRODUITS -> produit.html
 productCards.forEach(card => {
   card.addEventListener('click', () => {
-    window.location.href = 'produit.html';
+        const text = link.textContent.trim();
+    let page = 'index.html';
+    if(text.includes('Tous nos produits')) page = 'produit1.html';
+    else if(text.includes("")) page = 'produit2.html';
+    else if(text.includes("")) page = 'produit3.html';
+    else if(text.includes("')) page = 'produit4.html';
+    else if(text.includes('')) page = 'produit5.html';
+    else if(text.includes('')) page = 'produit6.html';
+    window.location.href = page;
+    
   });
 });
 

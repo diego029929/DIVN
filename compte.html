@@ -4,7 +4,6 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Créer un compte - DIVN</title>
-  <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
@@ -18,7 +17,6 @@
     .small { font-size:0.9rem; color:#bbb; text-align:center; margin-top:8px; }
     .profile { background:#0d0d0d; padding:12px; border-radius:8px; margin-top:12px; }
     .home-link { color:#f5f5f5; text-decoration:none; font-weight:600; }
-    .side-menu { display:none; } /* conserve ton ancien style si tu veux */
     .error { color:#ff6b6b; }
     .success { color:#7df59a; }
   </style>
@@ -50,10 +48,9 @@
 </div>
 
 <script>
-  // URL du backend
-  const API_BASE = "http://localhost:4000";
+  // URL de ton backend Render (remplace par ton URL Render)
+  const API_BASE = "https://ton-backend.onrender.com";
 
-  // Éléments DOM
   const accountForm = document.getElementById('accountForm');
   const switchForm = document.getElementById('switchForm');
   const formTitle = document.getElementById('formTitle');
@@ -85,14 +82,12 @@
     clearMessage();
   });
 
-  // Afficher message
   function showMessage(text, type = "") {
     messageEl.textContent = text;
     messageEl.className = type;
   }
   function clearMessage() { messageEl.textContent = ""; messageEl.className = ""; }
 
-  // Vérifie si utilisateur déjà connecté (token en localStorage) et récupère profil
   async function checkLoggedIn() {
     const token = localStorage.getItem('accessToken');
     if (!token) return;
@@ -101,23 +96,19 @@
         headers: { "Authorization": "Bearer " + token }
       });
       if (!res.ok) {
-        console.log("Token invalide / expiré");
         localStorage.removeItem('accessToken');
         return;
       }
       const data = await res.json();
       showProfile(data.user);
-    } catch (err) {
-      console.error(err);
-    }
+    } catch (err) { console.error(err); }
   }
 
-  // Affiche le profil
   function showProfile(user) {
-    profileBox.innerHTML = "<strong>Connecté :</strong><br/>" +
-                           "Nom : " + (user.username || "—") + "<br/>" +
-                           "Email : " + user.email + "<br/>" +
-                           "Créé le : " + new Date(user.created_at).toLocaleString();
+    profileBox.innerHTML = `<strong>Connecté :</strong><br/>
+                            Nom : ${user.username || "—"}<br/>
+                            Email : ${user.email}<br/>
+                            Créé le : ${new Date(user.created_at * 1000).toLocaleString()}`;
     profileArea.style.display = "block";
     accountForm.style.display = "none";
     switchForm.style.display = "none";
@@ -125,9 +116,7 @@
     clearMessage();
   }
 
-  // Logout
   logoutBtn.addEventListener('click', async () => {
-    // Optionnel : appeler /logout pour révoquer refresh token côté serveur
     localStorage.removeItem('accessToken');
     showMessage("Déconnecté.", "success");
     profileArea.style.display = "none";
@@ -135,14 +124,13 @@
     switchForm.style.display = "block";
   });
 
-  // Submit form (register/login)
   accountForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     clearMessage();
+
     const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
-
     if (!email || !password || (!isLogin && !username)) {
       showMessage("Remplis tous les champs requis.", "error");
       return;
@@ -157,23 +145,16 @@
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        showMessage(data.error || "Erreur serveur", "error");
-        return;
-      }
+      if (!res.ok) { showMessage(data.error || "Erreur serveur", "error"); return; }
 
       showMessage(data.message || "OK", "success");
 
-      // Si connexion -> stocker accessToken et afficher profil
       if (isLogin && data.accessToken) {
         localStorage.setItem('accessToken', data.accessToken);
         await checkLoggedIn();
       }
 
-      // Après inscription on peut basculer automatiquement vers login
       if (!isLogin) {
         isLogin = true;
         submitBtn.textContent = "Se connecter";
@@ -189,7 +170,6 @@
     }
   });
 
-  // Au chargement : vérifier token
   window.addEventListener('load', checkLoggedIn);
 </script>
 

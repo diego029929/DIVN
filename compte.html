@@ -1,219 +1,197 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Créer un compte - DIVN</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <!-- Police élégante -->
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
-    body {
-      background: #111;
-      margin: 0;
-    }
-
-    .account-content {
-      max-width: 500px;
-      margin: 40px auto;
-      padding: 20px;
-      background: #1a1a1a;
-      border-radius: 12px;
-      font-family: 'Playfair Display', serif;
-      color: #fff;
-      font-size: 1rem;
-      box-shadow: 0 4px 20px rgba(255,255,255,0.05);
-    }
-
-    .account-content h1 {
-      text-align: center;
-      margin-bottom: 20px;
-      font-weight: 600;
-      font-size: 2rem;
-      font-style: oblique;
-    }
-
-    .account-content form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    .account-content input {
-      padding: 12px;
-      border-radius: 6px;
-      border: none;
-      background: #111;
-      color: #fff;
-      font-size: 1rem;
-    }
-
-    .account-content input::placeholder {
-      color: #888;
-    }
-
-    .account-content button {
-      padding: 12px;
-      border: none;
-      border-radius: 6px;
-      background: #fff;
-      color: #111;
-      font-weight: 600;
-      font-size: 1rem;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .account-content button:hover {
-      background: #f5f5f5;
-    }
-
-    .switch-form {
-      text-align: center;
-      margin-top: 10px;
-      cursor: pointer;
-      color: #bbb;
-      font-size: 0.9rem;
-    }
-    .switch-form:hover {
-      color: #fff;
-    }
-
-    /* Lien Accueil */
-    .home-link {
-      color: #f5f5f5;
-      text-decoration: none;
-      font-weight: 600;
-      font-size: 1rem;
-      font-family: 'Playfair Display', serif;
-    }
-    .home-link:hover { text-decoration: underline; }
+    body { background:#111; margin:0; font-family:'Playfair Display', serif; color:#fff; }
+    .account-content { max-width:500px; margin:40px auto; padding:20px; background:#1a1a1a; border-radius:12px; box-shadow:0 4px 20px rgba(255,255,255,0.05); }
+    .account-content h1 { text-align:center; margin-bottom:20px; font-weight:600; font-size:2rem; font-style:oblique; }
+    .account-content form { display:flex; flex-direction:column; gap:12px; }
+    .account-content input { padding:12px; border-radius:6px; border:none; background:#111; color:#fff; }
+    .account-content button { padding:12px; border:none; border-radius:6px; background:#fff; color:#111; font-weight:600; cursor:pointer; }
+    .switch-form { text-align:center; margin-top:10px; cursor:pointer; color:#bbb; }
+    .small { font-size:0.9rem; color:#bbb; text-align:center; margin-top:8px; }
+    .profile { background:#0d0d0d; padding:12px; border-radius:8px; margin-top:12px; }
+    .home-link { color:#f5f5f5; text-decoration:none; font-weight:600; }
+    .side-menu { display:none; } /* conserve ton ancien style si tu veux */
+    .error { color:#ff6b6b; }
+    .success { color:#7df59a; }
   </style>
 </head>
 <body>
 
-  <!-- HEADER (comme histoire.html) -->
-  <header style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#222; box-shadow:0 2px 10px rgba(255,255,255,0.05); position:sticky; top:0; z-index:1000;">
-    <div class="menu-burger"><i class="fas fa-bars"></i></div>
-    <a href="index.html" class="home-link">Accueil</a>
-  </header>
+<header style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#222;">
+  <div class="menu-burger"><i class="fas fa-bars"></i></div>
+  <a href="index.html" class="home-link">Accueil</a>
+</header>
 
-  <!-- CONTENU COMPTE -->
-  <div class="account-content" id="accountContent">
-    <h1 id="formTitle">Créer un compte</h1>
-    <form id="accountForm">
-      <input type="text" id="username" placeholder="Nom d'utilisateur" required>
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="password" id="password" placeholder="Mot de passe" required>
-      <button type="submit" id="submitBtn">S'inscrire</button>
-    </form>
-    <div class="switch-form" id="switchForm">Vous avez déjà un compte ? Se connecter</div>
+<div class="account-content" id="accountContent">
+  <h1 id="formTitle">Créer un compte</h1>
+
+  <form id="accountForm">
+    <input type="text" id="username" placeholder="Nom d'utilisateur" required />
+    <input type="email" id="email" placeholder="Email" required />
+    <input type="password" id="password" placeholder="Mot de passe" required minlength="8" />
+    <button type="submit" id="submitBtn">S'inscrire</button>
+  </form>
+
+  <div class="switch-form" id="switchForm">Vous avez déjà un compte ? Se connecter</div>
+  <div class="small" id="message"></div>
+
+  <div id="profileArea" style="display:none;">
+    <div class="profile" id="profileBox"></div>
+    <button id="logoutBtn" style="margin-top:10px; padding:8px 12px; border-radius:6px; border:none; cursor:pointer;">Se déconnecter</button>
   </div>
+</div>
 
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
+<script>
+  // URL du backend
+  const API_BASE = "http://localhost:4000";
 
-  <!-- MENU LATERAL -->
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-content">
-      <div class="side-menu-header">
-        <span id="closeMenu">&times;</span>
-      </div>
-      <ul>
-        <li><a href="index.html"><i class="fas fa-box"></i> Tous nos produits</a></li>
-        <li><a href="histoire.html"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
-        <li><a href="aide.html"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
-        <li><a href="fam.html"><i class="fas fa-users"></i> The FAM</a></li>
-        <li><a href="equipage.html"><i class="fas fa-ship"></i> L’équipage</a></li>
-        <li><a href="compte.html"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
-      </ul>
+  // Éléments DOM
+  const accountForm = document.getElementById('accountForm');
+  const switchForm = document.getElementById('switchForm');
+  const formTitle = document.getElementById('formTitle');
+  const submitBtn = document.getElementById('submitBtn');
+  const usernameInput = document.getElementById('username');
+  const emailInput = document.getElementById('email');
+  const passwordInput = document.getElementById('password');
+  const messageEl = document.getElementById('message');
+  const profileArea = document.getElementById('profileArea');
+  const profileBox = document.getElementById('profileBox');
+  const logoutBtn = document.getElementById('logoutBtn');
 
-      <div class="social-links">
-        <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </div>
+  let isLogin = false;
 
-  <script>
-    // MENU BURGER
-    const menuBtn = document.querySelector('.menu-burger');
-    const sideMenu = document.getElementById('sideMenu');
-    const closeBtn = document.getElementById('closeMenu');
-    const overlay = document.getElementById('overlay');
+  // Toggle créer / login
+  switchForm.addEventListener('click', () => {
+    isLogin = !isLogin;
+    if(isLogin){
+      formTitle.textContent = "Se connecter";
+      submitBtn.textContent = "Se connecter";
+      usernameInput.style.display = "none";
+      switchForm.textContent = "Vous n'avez pas de compte ? Créer un compte";
+    } else {
+      formTitle.textContent = "Créer un compte";
+      submitBtn.textContent = "S'inscrire";
+      usernameInput.style.display = "block";
+      switchForm.textContent = "Vous avez déjà un compte ? Se connecter";
+    }
+    clearMessage();
+  });
 
-    menuBtn.addEventListener('click', () => {
-      sideMenu.classList.add('active');
-      overlay.classList.add('show');
-      document.body.style.overflow = "hidden";
-    });
-    closeBtn.addEventListener('click', () => {
-      sideMenu.classList.remove('active');
-      overlay.classList.remove('show');
-      document.body.style.overflow = "";
-    });
-    overlay.addEventListener('click', () => {
-      sideMenu.classList.remove('active');
-      overlay.classList.remove('show');
-      document.body.style.overflow = "";
-    });
+  // Afficher message
+  function showMessage(text, type = "") {
+    messageEl.textContent = text;
+    messageEl.className = type;
+  }
+  function clearMessage() { messageEl.textContent = ""; messageEl.className = ""; }
 
-    // FORMULAIRES COMPTE
-    const accountForm = document.getElementById('accountForm');
-    const switchForm = document.getElementById('switchForm');
-    const formTitle = document.getElementById('formTitle');
-    const submitBtn = document.getElementById('submitBtn');
-    const usernameInput = document.getElementById('username');
-    const emailInput = document.getElementById('email');
+  // Vérifie si utilisateur déjà connecté (token en localStorage) et récupère profil
+  async function checkLoggedIn() {
+    const token = localStorage.getItem('accessToken');
+    if (!token) return;
+    try {
+      const res = await fetch(API_BASE + "/me", {
+        headers: { "Authorization": "Bearer " + token }
+      });
+      if (!res.ok) {
+        console.log("Token invalide / expiré");
+        localStorage.removeItem('accessToken');
+        return;
+      }
+      const data = await res.json();
+      showProfile(data.user);
+    } catch (err) {
+      console.error(err);
+    }
+  }
 
-    let isLogin = false;
+  // Affiche le profil
+  function showProfile(user) {
+    profileBox.innerHTML = "<strong>Connecté :</strong><br/>" +
+                           "Nom : " + (user.username || "—") + "<br/>" +
+                           "Email : " + user.email + "<br/>" +
+                           "Créé le : " + new Date(user.created_at).toLocaleString();
+    profileArea.style.display = "block";
+    accountForm.style.display = "none";
+    switchForm.style.display = "none";
+    formTitle.textContent = "Mon compte";
+    clearMessage();
+  }
 
-    switchForm.addEventListener('click', () => {
-      isLogin = !isLogin;
-      if(isLogin){
-        formTitle.textContent = "Se connecter";
+  // Logout
+  logoutBtn.addEventListener('click', async () => {
+    // Optionnel : appeler /logout pour révoquer refresh token côté serveur
+    localStorage.removeItem('accessToken');
+    showMessage("Déconnecté.", "success");
+    profileArea.style.display = "none";
+    accountForm.style.display = "block";
+    switchForm.style.display = "block";
+  });
+
+  // Submit form (register/login)
+  accountForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMessage();
+    const username = usernameInput.value.trim();
+    const email = emailInput.value.trim();
+    const password = passwordInput.value.trim();
+
+    if (!email || !password || (!isLogin && !username)) {
+      showMessage("Remplis tous les champs requis.", "error");
+      return;
+    }
+
+    const url = isLogin ? "/login" : "/register";
+    const payload = isLogin ? { email, password } : { username, email, password };
+
+    try {
+      const res = await fetch(API_BASE + url, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        showMessage(data.error || "Erreur serveur", "error");
+        return;
+      }
+
+      showMessage(data.message || "OK", "success");
+
+      // Si connexion -> stocker accessToken et afficher profil
+      if (isLogin && data.accessToken) {
+        localStorage.setItem('accessToken', data.accessToken);
+        await checkLoggedIn();
+      }
+
+      // Après inscription on peut basculer automatiquement vers login
+      if (!isLogin) {
+        isLogin = true;
         submitBtn.textContent = "Se connecter";
+        formTitle.textContent = "Se connecter";
         usernameInput.style.display = "none";
         switchForm.textContent = "Vous n'avez pas de compte ? Créer un compte";
-      } else {
-        formTitle.textContent = "Créer un compte";
-        submitBtn.textContent = "S'inscrire";
-        usernameInput.style.display = "block";
-        switchForm.textContent = "Vous avez déjà un compte ? Se connecter";
-      }
-    });
-
-    accountForm.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const username = usernameInput.value.trim();
-      const email = emailInput.value.trim();
-      const password = document.getElementById('password').value.trim();
-
-      let users = JSON.parse(localStorage.getItem('users')) || [];
-
-      if(!isLogin){
-        if(users.find(u => u.email === email)){
-          alert("Un compte avec cet email existe déjà !");
-          return;
-        }
-        users.push({ username, email, password, cart: [] });
-        localStorage.setItem('users', JSON.stringify(users));
-        alert("Compte créé avec succès !");
-      } else {
-        const user = users.find(u => u.email === email && u.password === password);
-        if(user){
-          localStorage.setItem('currentUser', JSON.stringify(user));
-          alert("Connecté avec succès !");
-        } else {
-          alert("Email ou mot de passe incorrect !");
-        }
       }
 
       accountForm.reset();
-    });
-  </script>
+    } catch (err) {
+      console.error(err);
+      showMessage("Erreur réseau.", "error");
+    }
+  });
+
+  // Au chargement : vérifier token
+  window.addEventListener('load', checkLoggedIn);
+</script>
+
 </body>
-  </html>
-                                      
+</html>

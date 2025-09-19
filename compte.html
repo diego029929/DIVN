@@ -3,20 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Créer un compte - DIVN</title>
+  <title>Compte - DIVN</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
   <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet"/>
   <style>
     body { background:#111; margin:0; font-family:'Playfair Display', serif; color:#fff; }
-    .account-content { max-width:500px; margin:40px auto; padding:20px; background:#1a1a1a; border-radius:12px; box-shadow:0 4px 20px rgba(255,255,255,0.05); text-align:center; }
-    .account-content h1 { margin-bottom:20px; font-weight:600; font-size:2rem; font-style:oblique; }
+    .account-content { max-width:500px; margin:40px auto; padding:20px; background:#1a1a1a; border-radius:12px; box-shadow:0 4px 20px rgba(255,255,255,0.05); }
+    .account-content h1 { text-align:center; margin-bottom:20px; font-weight:600; font-size:2rem; font-style:oblique; }
     .account-content form { display:flex; flex-direction:column; gap:12px; }
     .account-content input { padding:12px; border-radius:6px; border:none; background:#111; color:#fff; }
     .account-content button { padding:12px; border:none; border-radius:6px; background:#fff; color:#111; font-weight:600; cursor:pointer; }
     .switch-form { text-align:center; margin-top:10px; cursor:pointer; color:#bbb; }
     .small { font-size:0.9rem; color:#bbb; text-align:center; margin-top:8px; }
-    .profile { background:#0d0d0d; padding:12px; border-radius:8px; margin-top:12px; }
-    .profile-logo { font-size:60px; margin-bottom:10px; color:#7df59a; }
+    .profile { background:#0d0d0d; padding:12px; border-radius:8px; margin-top:12px; text-align:center; }
+    .profile i { font-size:50px; margin-bottom:10px; display:block; }
     .home-link { color:#f5f5f5; text-decoration:none; font-weight:600; }
     .error { color:#ff6b6b; }
     .success { color:#7df59a; }
@@ -25,7 +25,6 @@
 <body>
 
 <header style="display:flex; justify-content:space-between; align-items:center; padding:12px 20px; background:#222;">
-  <div class="menu-burger"><i class="fas fa-bars"></i></div>
   <a href="index.html" class="home-link">Accueil</a>
 </header>
 
@@ -43,17 +42,16 @@
   <div class="small" id="message"></div>
 
   <div id="profileArea" style="display:none;">
-    <div class="profile">
-      <i class="fas fa-user-circle profile-logo"></i>
-      <div id="profileName" style="font-weight:600; font-size:1.2rem; margin-bottom:10px;"></div>
-      <div id="profileBox"></div>
-      <button id="logoutBtn" style="margin-top:10px; padding:8px 12px; border-radius:6px; border:none; cursor:pointer;">Se déconnecter</button>
+    <div class="profile" id="profileBox">
+      <i class="fas fa-user-circle"></i>
+      <div id="profileName"></div>
     </div>
+    <button id="logoutBtn" style="margin-top:10px; padding:8px 12px; border-radius:6px; border:none; cursor:pointer;">Se déconnecter</button>
   </div>
 </div>
 
 <script>
-  const API_BASE = "https://compte-divn.onrender.com";
+  const API_BASE = "https://compte-divn.onrender.com"; // Ton backend Node.js
 
   const accountForm = document.getElementById('accountForm');
   const switchForm = document.getElementById('switchForm');
@@ -86,11 +84,14 @@
     clearMessage();
   });
 
-  function showMessage(text, type = "") {
+  function showMessage(text, type="") {
     messageEl.textContent = text;
     messageEl.className = type;
   }
-  function clearMessage() { messageEl.textContent = ""; messageEl.className = ""; }
+  function clearMessage() {
+    messageEl.textContent = "";
+    messageEl.className = "";
+  }
 
   async function checkLoggedIn() {
     const token = localStorage.getItem('accessToken');
@@ -100,17 +101,19 @@
         headers: { "Authorization": "Bearer " + token }
       });
       if (!res.ok) {
+        console.log("Token invalide ou expiré");
         localStorage.removeItem('accessToken');
         return;
       }
       const data = await res.json();
       showProfile(data.user);
-    } catch (err) { console.error(err); }
+    } catch (err) {
+      console.error("Erreur fetch /me:", err);
+    }
   }
 
   function showProfile(user) {
-    profileName.textContent = user.username || "—";
-    profileBox.innerHTML = "Email : " + user.email + "<br/>Créé le : " + new Date(user.created_at * 1000).toLocaleString();
+    profileName.textContent = user.username || user.email || "Utilisateur";
     profileArea.style.display = "block";
     accountForm.style.display = "none";
     switchForm.style.display = "none";
@@ -118,12 +121,12 @@
     clearMessage();
   }
 
-  logoutBtn.addEventListener('click', async () => {
+  logoutBtn.addEventListener('click', () => {
     localStorage.removeItem('accessToken');
-    showMessage("Déconnecté.", "success");
     profileArea.style.display = "none";
     accountForm.style.display = "block";
     switchForm.style.display = "block";
+    showMessage("Déconnecté.", "success");
   });
 
   accountForm.addEventListener('submit', async (e) => {
@@ -133,6 +136,7 @@
     const username = usernameInput.value.trim();
     const email = emailInput.value.trim();
     const password = passwordInput.value.trim();
+
     if (!email || !password || (!isLogin && !username)) {
       showMessage("Remplis tous les champs requis.", "error");
       return;
@@ -142,13 +146,19 @@
     const payload = isLogin ? { email, password } : { username, email, password };
 
     try {
+      console.log("Envoi payload:", payload);
       const res = await fetch(API_BASE + url, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload)
       });
       const data = await res.json();
-      if (!res.ok) { showMessage(data.error || "Erreur serveur", "error"); return; }
+      console.log("Réponse serveur:", data);
+
+      if (!res.ok) {
+        showMessage(data.error || "Erreur serveur", "error");
+        return;
+      }
 
       showMessage(data.message || "OK", "success");
 
@@ -166,8 +176,9 @@
       }
 
       accountForm.reset();
+
     } catch (err) {
-      console.error(err);
+      console.error("Erreur réseau:", err);
       showMessage("Erreur réseau.", "error");
     }
   });

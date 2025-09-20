@@ -1,169 +1,230 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Produits</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Produits</title>
+<link rel="stylesheet" href="style.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+.home-btn { background: #fff; color: #111; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; }
+.product-card { opacity: 1; transform: translateY(0); transition: none; }
+</style>
 </head>
 <body>
+<header>
+<div class="menu-burger"><i class="fas fa-bars"></i></div>
+<div class="search-bar">
+<input type="text" id="searchInput" placeholder="Rechercher un produit...">
+<button id="searchBtn"><i class="fas fa-search"></i></button>
+</div>
+<div class="profile-icon"><i class="fas fa-user"></i></div>
+</header>
 
-  <!-- HEADER -->
-  <header>
-    <div class="menu-burger"><i class="fas fa-bars"></i></div>
-    <div class="search-bar">
-      <input type="text" id="searchInput" placeholder="Rechercher un produit...">
-      <button id="searchBtn"><i class="fas fa-search"></i></button>
-    </div>
-    <div class="profile-icon"><i class="fas fa-user"></i></div>
-  </header>
+<div class="filter">
+<button class="home-btn" onclick="window.location.href='index.html'">Accueil</button>
+<select id="sort">
+<option value="pertinence">Pertinence</option>
+<option value="asc">Prix croissant</option>
+<option value="desc">Prix décroissant</option>
+</select>
+</div>
 
-  <!-- TRI + BOUTON ACCUEIL -->
-  <div class="filter">
-    <button class="home-btn" style="color:#fff;" onclick="window.location.href='index.html'">Accueil</button>
-    <select id="sort">
-      <option value="pertinence">Pertinence</option>
-      <option value="asc">Prix croissant</option>
-      <option value="desc">Prix décroissant</option>
-    </select>
-  </div>
+<div class="products">
+<div class="product-card" data-title="Produit 1 Chaussure Sport" data-price="49.99" data-image="https://via.placeholder.com/300x300?text=Produit+1A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+1B">
+<img src="https://via.placeholder.com/300x300?text=Produit+1C">
+<img src="https://via.placeholder.com/300x300?text=Produit+1D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Solis</div>
+<div class="product-price">29,90 €</div>
+</div>
 
-  <!-- PRODUITS -->
-  <div class="products">
-    <div class="product-card" data-title="Produit 1 Chaussure Sport" data-price="49.99" data-image="https://via.placeholder.com/300x300?text=Produit+1A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+1D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Solis</div>
-      <div class="product-price">29,90 €</div>
-    </div>
+<div class="product-card" data-title="Produit 2 Veste Hiver" data-price="59.99" data-image="https://via.placeholder.com/300x300?text=Produit+2A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+2B">
+<img src="https://via.placeholder.com/300x300?text=Produit+2C">
+<img src="https://via.placeholder.com/300x300?text=Produit+2D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Veyra</div>
+<div class="product-price">25,99 €</div>
+</div>
 
-    <div class="product-card" data-title="Produit 2 Veste Hiver" data-price="59.99" data-image="https://via.placeholder.com/300x300?text=Produit+2A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+2D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Veyra</div>
-      <div class="product-price">25,99 €</div>
-    </div>
+<div class="product-card" data-title="Produit 3 Casque Audio" data-price="79.99" data-image="https://via.placeholder.com/300x300?text=Produit+3A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+3A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+3B">
+<img src="https://via.placeholder.com/300x300?text=Produit+3C">
+<img src="https://via.placeholder.com/300x300?text=Produit+3D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Eryos</div>
+<div class="product-price">39,90 €</div>
+</div>
 
-    <div class="product-card" data-title="Produit 3 Casque Audio" data-price="79.99" data-image="https://via.placeholder.com/300x300?text=Produit+3A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+3D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Eryos</div>
-      <div class="product-price">39,90 €</div>
-    </div>
+<div class="product-card" data-title="Produit 4 Sac à Dos" data-price="39.99" data-image="https://via.placeholder.com/300x300?text=Produit+4A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+4A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+4B">
+<img src="https://via.placeholder.com/300x300?text=Produit+4C">
+<img src="https://via.placeholder.com/300x300?text=Produit+4D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Oslo</div>
+<div class="product-price">29,90 €</div>
+</div>
 
-    <div class="product-card" data-title="Produit 4 Sac à Dos" data-price="39.99" data-image="https://via.placeholder.com/300x300?text=Produit+4A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+4D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Oslo</div>
-      <div class="product-price">29,90 €</div>
-    </div>
+<div class="product-card" data-title="Produit 5 Montre Connectée" data-price="99.99" data-image="https://via.placeholder.com/300x300?text=Produit+5A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+5A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+5B">
+<img src="https://via.placeholder.com/300x300?text=Produit+5C">
+<img src="https://via.placeholder.com/300x300?text=Produit+5D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Liora </div>
+<div class="product-price">29,90 €</div>
+</div>
 
-    <div class="product-card" data-title="Produit 5 Montre Connectée" data-price="99.99" data-image="https://via.placeholder.com/300x300?text=Produit+5A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+5D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Liora </div>
-      <div class="product-price">29,90 €</div>
-    </div>
+<div class="product-card" data-title="Produit 6 Lunettes Soleil" data-price="29.99" data-image="https://via.placeholder.com/300x300?text=Produit+6A">
+<div class="product-slider">
+<img src="https://via.placeholder.com/300x300?text=Produit+6A" class="active">
+<img src="https://via.placeholder.com/300x300?text=Produit+6B">
+<img src="https://via.placeholder.com/300x300?text=Produit+6C">
+<img src="https://via.placeholder.com/300x300?text=Produit+6D">
+<div class="slider-dots">
+<span class="active"></span><span></span><span></span><span></span>
+</div>
+</div>
+<div class="product-title">Echarpe Orelia</div>
+<div class="product-price">29,99 €</div>
+</div>
+</div>
 
-    <div class="product-card" data-title="Produit 6 Lunettes Soleil" data-price="29.99" data-image="https://via.placeholder.com/300x300?text=Produit+6A">
-      <div class="product-slider">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6A" class="active">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6B">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6C">
-        <img src="https://via.placeholder.com/300x300?text=Produit+6D">
-        <div class="slider-dots">
-          <span class="active"></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-      <div class="product-title">Echarpe Orelia</div>
-      <div class="product-price">29,99 €</div>
-    </div>
-  </div>
+<div class="overlay" id="overlay"></div>
 
-  <!-- OVERLAY -->
-  <div class="overlay" id="overlay"></div>
+<div class="side-menu" id="sideMenu">
+<div class="menu-content">
+<div class="side-menu-header">
+<span id="closeMenu">&times;</span>
+</div>
+<ul>
+<li><a href="#"><i class="fas fa-box"></i> Tous nos produits</a></li>
+<li><a href="#"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
+<li><a href="#"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
+<li><a href="#"><i class="fas fa-users"></i> The FAM</a></li>
+<li><a href="#"><i class="fas fa-ship"></i> L’équipage</a></li>
+<li><a href="#"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
+</ul>
+<div class="social-links">
+<a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
+<a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
+</div>
+</div>
+</div>
 
-  <!-- MENU LATERAL -->
-  <div class="side-menu" id="sideMenu">
-    <div class="menu-content">
-      <div class="side-menu-header">
-        <span id="closeMenu">&times;</span>
-      </div>
-      <ul>
-        <li><a href="#"><i class="fas fa-box"></i> Tous nos produits</a></li>
-        <li><a href="#"><i class="fas fa-book-open"></i> L'histoire de DIVN</a></li>
-        <li><a href="#"><i class="fas fa-question-circle"></i> Besoin d'aide ?</a></li>
-        <li><a href="#"><i class="fas fa-users"></i> The FAM</a></li>
-        <li><a href="#"><i class="fas fa-ship"></i> L’équipage</a></li>
-        <li><a href="#"><i class="fas fa-user-plus"></i> Créer un compte</a></li>
-      </ul>
+<script>
+// SLIDER
+document.querySelectorAll('.product-slider').forEach(slider => {
+const slides = slider.querySelectorAll('img');
+const dots = slider.querySelectorAll('.slider-dots span');
+dots.forEach((dot, idx) => {
+dot.addEventListener('click', () => {
+slides.forEach(s => s.classList.remove('active'));
+dots.forEach(d => d.classList.remove('active'));
+slides[idx].classList.add('active');
+dots[idx].classList.add('active');
+});
+});
+});
 
-      <div class="social-links">
-        <a href="https://www.tiktok.com" target="_blank"><i class="fab fa-tiktok"></i></a>
-        <a href="https://www.instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://www.twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </div>
+// MENU BURGER
+const menuBtn = document.querySelector('.menu-burger');
+const sideMenu = document.getElementById('sideMenu');
+const closeBtn = document.getElementById('closeMenu');
+const overlay = document.getElementById('overlay');
+menuBtn.addEventListener('click', () => {
+sideMenu.classList.add('active');
+overlay.classList.add('show');
+document.body.style.overflow = "hidden";
+});
+closeBtn.addEventListener('click', () => {
+sideMenu.classList.remove('active');
+overlay.classList.remove('show');
+document.body.style.overflow = "";
+});
+overlay.addEventListener('click', () => {
+sideMenu.classList.remove('active');
+overlay.classList.remove('show');
+document.body.style.overflow = "";
+});
 
-  <script src="script.js"></script>
-  <script>
-    // Supprimer le délai d'apparition pour les cartes produits
-    document.querySelectorAll('.product-card').forEach(card => card.classList.add('show'));
-  </script>
+// BARRE DE RECHERCHE
+const searchInput = document.querySelector('.search-bar input');
+const searchBar = document.querySelector('.search-bar');
+const searchBtn = document.getElementById('searchBtn');
+const productContainer = document.querySelector('.products');
+[searchInput, searchBtn].forEach(el => {
+el.addEventListener('focus', () => searchBar.classList.add('active'));
+el.addEventListener('blur', () => searchBar.classList.remove('active'));
+});
+
+// FILTRAGE + TRI
+function normalize(str){return str.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"");}
+function similarity(str,keyword){const words=normalize(str).split(" ");const keys=normalize(keyword).split(" ");return keys.reduce((score,key)=>score+(words.includes(key)?1:0),0);}
+function filterProducts(){
+const query=searchInput.value.trim();
+const sort=document.getElementById('sort').value;
+let cards=Array.from(document.querySelectorAll('.product-card'));
+cards.forEach(card=>{card.dataset.score=similarity(card.dataset.title,query);});
+if(query!==""){cards=cards.filter(card=>card.dataset.score>0);}
+if(sort==="pertinence"){cards.sort((a,b)=>b.dataset.score-a.dataset.score);}
+else if(sort==="asc"){cards.sort((a,b)=>parseFloat(a.dataset.price)-parseFloat(b.dataset.price));}
+else if(sort==="desc"){cards.sort((a,b)=>parseFloat(b.dataset.price)-parseFloat(a.dataset.price));}
+productContainer.innerHTML="";
+cards.forEach(c=>productContainer.appendChild(c));
+}
+searchInput.addEventListener("input",filterProducts);
+document.getElementById("sort").addEventListener("change",filterProducts);
+
+// PRODUITS CLIQUE -> PAGE PRODUIT
+const productPages=['produit1.html','produit2.html','produit3.html','produit4.html','produit5.html','produit6.html'];
+document.querySelectorAll('.product-card').forEach((card,index)=>{card.addEventListener('click',()=>{window.location.href=productPages[index]||'index.html';});});
+
+// CLIQUE SUR MENU
+document.querySelectorAll('.side-menu ul li a').forEach(link=>{
+link.addEventListener('click',e=>{
+e.preventDefault();
+const text=link.textContent.trim();
+let page='index.html';
+if(text.includes('Tous nos produits')) page='produits.html';
+else if(text.includes("L'histoire")) page='histoire.html';
+else if(text.includes("Besoin d'aide")) page='aide.html';
+else if(text.includes('The FAM')) page='fam.html';
+else if(text.includes('L’équipage')) page='equipage.html';
+else if(text.includes('Créer un compte')) page='compte.html';
+window.location.href=page;
+});
+});
+
+// PROFIL
+document.querySelector('.profile-icon').addEventListener('click',()=>{window.location.href='compte.html';});
+</script>
 </body>
 </html>

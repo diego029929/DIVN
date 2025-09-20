@@ -6,30 +6,6 @@
   <title>Produits</title>
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <style>
-    /* Lien Accueil blanc simple */
-    .home-link {
-      color: white;
-      text-decoration: none;
-      font-weight: bold;
-      margin-right: 20px;
-      cursor: pointer;
-    }
-    .home-link:hover {
-      text-decoration: underline;
-    }
-
-    /* Alignement de la section filter */
-    .filter {
-      display: flex;
-      align-items: center;
-      margin: 20px 0;
-    }
-
-    .filter select {
-      padding: 5px 10px;
-    }
-  </style>
 </head>
 <body>
 
@@ -43,14 +19,9 @@
     <div class="profile-icon"><i class="fas fa-user"></i></div>
   </header>
 
-  <!-- IMAGE PRINCIPALE -->
-  <div class="main-image">
-    <img src="image1.jpg" alt="Image principale">
-  </div>
-
-  <!-- TRI + LIEN ACCUEIL -->
+  <!-- TRI + BOUTON ACCUEIL -->
   <div class="filter">
-    <a href="index.html" class="home-link">Accueil</a>
+    <button class="home-btn" style="color:#fff;" onclick="window.location.href='index.html'">Accueil</button>
     <select id="sort">
       <option value="pertinence">Pertinence</option>
       <option value="asc">Prix croissant</option>
@@ -141,7 +112,7 @@
           <span></span>
         </div>
       </div>
-      <div class="product-title">Echarpe Liora</div>
+      <div class="product-title">Echarpe Liora </div>
       <div class="product-price">29,90 €</div>
     </div>
 
@@ -162,6 +133,9 @@
       <div class="product-price">29,99 €</div>
     </div>
   </div>
+
+  <!-- OVERLAY -->
+  <div class="overlay" id="overlay"></div>
 
   <!-- MENU LATERAL -->
   <div class="side-menu" id="sideMenu">
@@ -187,5 +161,9 @@
   </div>
 
   <script src="script.js"></script>
+  <script>
+    // Supprimer le délai d'apparition pour les cartes produits
+    document.querySelectorAll('.product-card').forEach(card => card.classList.add('show'));
+  </script>
 </body>
 </html>

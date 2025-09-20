@@ -184,6 +184,25 @@
       icon.classList.toggle('fa-chevron-down');
       icon.classList.toggle('fa-chevron-up');
     });
+    
+    // NAVIGATION UNIVERSELLE
+    function setupNavigation(){
+      document.querySelectorAll('.side-menu ul li a').forEach(link => {
+        link.addEventListener('click', e => {
+          e.preventDefault();
+          const text = link.textContent.trim();
+          let page = 'index.html';
+          if(text.includes('Tous nos produits')) page = 'index.html';
+          else if(text.includes("L'histoire")) page = 'histoire.html';
+          else if(text.includes("Besoin d'aide")) page = 'aide.html';
+          else if(text.includes('The FAM')) page = 'fam.html';
+          else if(text.includes('L’équipage')) page = 'equipage.html';
+          else if(text.includes('Créer un compte')) page = 'compte.html';
+          window.location.href = page;
+        });
+      });
+    }
+    setupNavigation();
   </script>
 
 </body>
